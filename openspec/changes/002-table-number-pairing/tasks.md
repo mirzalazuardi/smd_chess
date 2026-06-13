@@ -24,10 +24,10 @@
 
 ## Phase 5: Theme Toggle Component
 
-- [ ] **5.1** Check `tailwind.config.ts` — ensure `darkMode: 'class'` is configured
-- [ ] **5.2** Create `src/components/ui/theme-toggle.tsx` — toggle button with sun/moon icon
-- [ ] **5.3** Implement localStorage persistence for theme state
-- [ ] **5.4** Support URL param `?theme=dark` to force mode
+- [x] **5.1** Check `tailwind.config.ts` — ensure `darkMode: 'class'` is configured
+- [x] **5.2** Create `src/components/ui/theme-toggle.tsx` — toggle button with sun/moon icon
+- [x] **5.3** Implement localStorage persistence for theme state
+- [x] **5.4** Support URL param `?theme=dark` to force mode
 
 ## Phase 6: Public TV Display Page
 
