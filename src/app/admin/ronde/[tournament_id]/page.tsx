@@ -7,6 +7,7 @@ interface MatchRow {
   id: string;
   player1_id: string;
   player2_id: string | null;
+  table_no: number | null;
   player1_score: number | null;
   player2_score: number | null;
   status: string;
@@ -47,7 +48,16 @@ export default async function RoundDetailPage({ params }: Props) {
     .eq("tournament_id", tournament_id)
     .order("round_number", { ascending: true });
 
-  const rounds = (data as RoundRow[]) ?? [];
+  const rounds = (data as RoundRow[] | null)?.map((round) => ({
+    ...round,
+    matches: round.matches
+      ? [...round.matches].sort((a, b) => {
+          if (a.table_no === null) return 1;
+          if (b.table_no === null) return -1;
+          return (a.table_no ?? 0) - (b.table_no ?? 0);
+        })
+      : null,
+  })) ?? [];
 
   const { data: registrations } = await supabase
     .from("registrations")
@@ -117,11 +127,22 @@ export default async function RoundDetailPage({ params }: Props) {
               </div>
 
               <div className="p-4">
+                <div className="flex items-center gap-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider border-b mb-2">
+                  <span className="min-w-[40px] text-center">Meja</span>
+                  <span className="min-w-[150px] text-right">Putih</span>
+                  <span className="min-w-[60px] text-center">Hasil</span>
+                  <span className="min-w-[150px]">Hitam</span>
+                </div>
+
                 {round.matches?.map((match) => (
                   <div
                     key={match.id}
                     className="flex items-center gap-4 py-2 text-sm"
                   >
+                    <span className="min-w-[40px] text-center font-mono font-bold text-gray-900">
+                      {match.table_no ?? "-"}
+                    </span>
+
                     <span className="font-medium min-w-[150px] text-right">
                       {nameMap.get(match.player1_id) ??
                         match.player1_id.slice(0, 8)}
@@ -129,7 +150,7 @@ export default async function RoundDetailPage({ params }: Props) {
 
                     {match.player2_id ? (
                       <>
-                        <span className="font-mono text-gray-600">
+                        <span className="font-mono text-gray-600 min-w-[60px] text-center">
                           {match.status === "completed"
                             ? `${match.player1_score ?? "-"} - ${match.player2_score ?? "-"}`
                             : "vs"}
@@ -140,8 +161,8 @@ export default async function RoundDetailPage({ params }: Props) {
                         </span>
                       </>
                     ) : (
-                      <span className="text-gray-400 italic">
-                        BYE ({match.player1_score ?? "-"})
+                      <span className="text-gray-400 italic min-w-[60px] text-center">
+                        BYE
                       </span>
                     )}
                   </div>

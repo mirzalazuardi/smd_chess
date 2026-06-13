@@ -19,8 +19,8 @@
 
 ## Phase 4: Admin UI
 
-- [ ] **4.1** Update admin page `src/app/admin/ronde/[tournament_id]/page.tsx` — add "Meja" column to matches display
-- [ ] **4.2** Update query to order by `table_no ASC NULLS LAST`
+- [x] **4.1** Update admin page `src/app/admin/ronde/[tournament_id]/page.tsx` — add "Meja" column to matches display
+- [x] **4.2** Update query to order by `table_no ASC NULLS LAST`
 
 ## Phase 5: Theme Toggle Component
 
