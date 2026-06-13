@@ -42,3 +42,6 @@ supabase/.temp/
 
 # Claude Code
 .claude/
+
+# CodeGraph
+.codegraph/
