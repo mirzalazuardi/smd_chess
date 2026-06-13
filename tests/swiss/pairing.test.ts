@@ -197,3 +197,24 @@ describe("generateSwissPairings — bye rules", () => {
     expect(bye!.white.id).toBe("3");
   });
 });
+
+describe("generateSwissPairings — float-down limit", () => {
+  it("gives bye when player exceeds float-down limit", () => {
+    // P1 (3.0) floats: group 3.0→2.5→2.0 → exceeds max 2 → bye
+    const players = [
+      makePlayer("1", 3, 2000),
+      makePlayer("2", 2.5, 1900),
+      makePlayer("3", 2.5, 1800),
+      makePlayer("4", 2, 1700),
+      makePlayer("5", 2, 1600),
+    ];
+
+    const pairings = generateSwissPairings(players);
+
+    // 2 pairs (2vs3, 4vs5) + 1 bye (1)
+    const bye = pairings.find((p) => p.black === null);
+    expect(bye).toBeDefined();
+    expect(bye!.white.id).toBe("1");
+    expect(bye!.white.score).toBe(3);
+  });
+});

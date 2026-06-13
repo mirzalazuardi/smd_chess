@@ -1,5 +1,7 @@
 import type { Player, Pairing } from "./types";
 
+const MAX_FLOAT_DOWN = Number(process.env.SWISS_MAX_FLOAT_DOWN) || 2;
+
 export function generateSwissPairings(players: Player[]): Pairing[] {
   if (players.length === 0) return [];
   if (players.length === 1) {
@@ -15,13 +17,13 @@ export function generateSwissPairings(players: Player[]): Pairing[] {
   const unpaired = new Set(sorted.map((p) => p.id));
   const pairings: Pairing[] = [];
   const groups = groupByScore(sorted);
+  const floatCount = new Map<string, number>();
 
   for (let i = 0; i < groups.length; i++) {
     let group = groups[i].filter((p) => unpaired.has(p.id));
 
     if (group.length === 0) continue;
 
-    // Pair within group
     const groupPairs = pairGroup(group);
     for (const pair of groupPairs) {
       pairings.push(pair);
@@ -29,19 +31,22 @@ export function generateSwissPairings(players: Player[]): Pairing[] {
       if (pair.black) unpaired.delete(pair.black.id);
     }
 
-    // If odd player remains and next group exists, float down
     const remaining = group.filter((p) => unpaired.has(p.id));
     if (remaining.length === 1 && i + 1 < groups.length) {
-      groups[i + 1].push(remaining[0]);
+      const player = remaining[0];
+      const currentFloats = floatCount.get(player.id) ?? 0;
+
+      if (currentFloats < MAX_FLOAT_DOWN) {
+        floatCount.set(player.id, currentFloats + 1);
+        groups[i + 1].push(player);
+      }
     }
   }
 
-  // Handle final odd player → bye
   const finalRemaining = sorted.filter((p) => unpaired.has(p.id));
-  if (finalRemaining.length === 1) {
-    const byePlayer = finalRemaining[0];
-    byePlayer.hadBye = true;
-    pairings.push({ white: byePlayer, black: null });
+  for (const leftover of finalRemaining) {
+    leftover.hadBye = true;
+    pairings.push({ white: leftover, black: null });
   }
 
   return pairings;
