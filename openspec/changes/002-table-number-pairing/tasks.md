@@ -8,10 +8,10 @@
 
 ## Phase 2: Pairing Logic
 
-- [ ] **2.1** Modify `generateSwissPairings()` in `src/lib/swiss/pairing.ts` — assign sequential `tableNo` starting from 1, null for bye
-- [ ] **2.2** Write unit test: table 1 = highest scoring pair
-- [ ] **2.3** Write unit test: bye gets `tableNo = null`
-- [ ] **2.4** Write unit test: sequential table numbers for all regular matches
+- [x] **2.1** Modify `generateSwissPairings()` in `src/lib/swiss/pairing.ts` — assign sequential `tableNo` starting from 1, null for bye
+- [x] **2.2** Write unit test: table 1 = highest scoring pair
+- [x] **2.3** Write unit test: bye gets `tableNo = null`
+- [x] **2.4** Write unit test: sequential table numbers for all regular matches
 
 ## Phase 3: API
 
