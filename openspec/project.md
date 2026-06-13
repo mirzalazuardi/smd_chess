@@ -94,10 +94,12 @@ smd_chess/
 - `round_id` UUID REFERENCES tournament_rounds
 - `player1_id` UUID REFERENCES registrations — white
 - `player2_id` UUID REFERENCES registrations — black (NULL for bye)
+- `table_no` INT — sequential number (NULL for bye), CHECK > 0
 - `player1_score` DECIMAL(2,1) — 1, 0.5, or 0
 - `player2_score` DECIMAL(2,1)
 - `status` ENUM('pending', 'ongoing', 'completed')
 - `created_at`, `updated_at` TIMESTAMP
+- INDEX `idx_matches_table_no` on `(round_id, table_no)`
 
 ## Testing Strategy
 

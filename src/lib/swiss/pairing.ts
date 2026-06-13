@@ -6,7 +6,7 @@ export function generateSwissPairings(players: Player[]): Pairing[] {
   if (players.length === 0) return [];
   if (players.length === 1) {
     players[0].hadBye = true;
-    return [{ white: players[0], black: null }];
+    return [{ white: players[0], black: null, tableNo: null }];
   }
 
   const sorted = [...players].sort((a, b) => {
@@ -46,7 +46,16 @@ export function generateSwissPairings(players: Player[]): Pairing[] {
   const finalRemaining = sorted.filter((p) => unpaired.has(p.id));
   for (const leftover of finalRemaining) {
     leftover.hadBye = true;
-    pairings.push({ white: leftover, black: null });
+    pairings.push({ white: leftover, black: null, tableNo: null });
+  }
+
+  let tableNo = 1;
+  for (const pair of pairings) {
+    if (pair.black !== null) {
+      pair.tableNo = tableNo++;
+    } else {
+      pair.tableNo = null;
+    }
   }
 
   return pairings;
@@ -101,7 +110,7 @@ function pairGroup(players: Player[]): Pairing[] {
     white.lastColor = "W";
     black.lastColor = "B";
 
-    pairings.push({ white, black });
+    pairings.push({ white, black, tableNo: null });
   }
 
   return pairings;

@@ -11,6 +11,7 @@ export interface Player {
 export interface Pairing {
   white: Player;
   black: Player | null;
+  tableNo: number | null;
 }
 
 export interface MatchResult {
