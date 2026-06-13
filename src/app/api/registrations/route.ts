@@ -4,7 +4,7 @@ import { registrationSchema, tournamentCodeSchema } from "@/lib/validation/schem
 import { generateRegistrationId, currentYear } from "@/lib/utils/helpers";
 
 const STORAGE_BUCKET = "proof_transfer";
-const MAX_FILE_SIZE = 5_242_880;
+const MAX_FILE_SIZE = 400 * 1024; // 400KB
 
 export async function POST(request: Request) {
   try {
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
 
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
-        { error: "Ukuran file maksimal 5MB" },
+        { error: "Ukuran file maksimal 400KB" },
         { status: 400 },
       );
     }

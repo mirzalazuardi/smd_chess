@@ -61,8 +61,8 @@ export function RegistrationForm({ tournaments }: Props) {
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 5_242_880) {
-        setError("Ukuran file maksimal 5MB");
+      if (file.size > 400 * 1024) {
+        setError("Ukuran file maksimal 400KB");
         if (fileInputRef.current) fileInputRef.current.value = "";
         return;
       }
