@@ -198,6 +198,46 @@ describe("generateSwissPairings — bye rules", () => {
   });
 });
 
+describe("generateSwissPairings — table numbers", () => {
+  it("assigns table 1 to highest scoring pair", () => {
+    const players = [
+      makePlayer("a", 2, 1800),
+      makePlayer("b", 2, 1750),
+      makePlayer("c", 1, 1700),
+      makePlayer("d", 1, 1650),
+    ];
+    const pairings = generateSwissPairings(players);
+
+    expect(pairings[0].tableNo).toBe(1);
+    expect(pairings[0].white.score).toBe(2);
+  });
+
+  it("assigns null tableNo to bye", () => {
+    const players = [
+      makePlayer("a", 1, 1800),
+      makePlayer("b", 1, 1750),
+      makePlayer("c", 0, 1700),
+    ];
+    const pairings = generateSwissPairings(players);
+
+    const bye = pairings.find((p) => p.black === null);
+    expect(bye?.tableNo).toBeNull();
+  });
+
+  it("assigns sequential table numbers for all regular matches", () => {
+    const players = Array.from({ length: 10 }, (_, i) =>
+      makePlayer(String(i), 0, 1800 - i * 50),
+    );
+    const pairings = generateSwissPairings(players);
+
+    const tableNos = pairings
+      .filter((p) => p.black !== null)
+      .map((p) => p.tableNo);
+
+    expect(tableNos).toEqual([1, 2, 3, 4, 5]);
+  });
+});
+
 describe("generateSwissPairings — float-down limit", () => {
   it("gives bye when player exceeds float-down limit", () => {
     // P1 (3.0) floats: group 3.0→2.5→2.0 → exceeds max 2 → bye
