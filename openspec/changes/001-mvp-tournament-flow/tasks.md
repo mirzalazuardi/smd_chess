@@ -68,10 +68,10 @@
 
 ## Phase 8: Public Pages
 
-- [ ] **8.1** Create pairings page `/jadwal/[tournament_code]/[round]`
-- [ ] **8.2** Create standings page `/klasemen/[tournament_code]`
-- [ ] **8.3** Style for mobile and projector display
-- [ ] **8.4** Add auto-refresh or manual refresh for live updates
+- [x] **8.1** Create pairings page `/jadwal/[tournament_code]/[round]`
+- [x] **8.2** Create standings page `/klasemen/[tournament_code]`
+- [x] **8.3** Style for mobile and projector display
+- [x] **8.4** Add auto-refresh or manual refresh for live updates
 
 ## Phase 9: Polish & Deploy
 
