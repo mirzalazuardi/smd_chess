@@ -31,10 +31,10 @@
 
 ## Phase 4: Tournament Management (Admin)
 
-- [ ] **4.1** Create tournament list page
-- [ ] **4.2** Create tournament form (code, name, rounds_count)
-- [ ] **4.3** Create API routes for tournament CRUD
-- [ ] **4.4** Add tournament code validation (`^[a-z0-9_]+$`)
+- [x] **4.1** Create tournament list page
+- [x] **4.2** Create tournament form (code, name, rounds_count)
+- [x] **4.3** Create API routes for tournament CRUD
+- [x] **4.4** Add tournament code validation (`^[a-z0-9_]+$`)
 
 ## Phase 5: Payment Verification (Admin)
 
