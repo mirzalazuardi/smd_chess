@@ -3,7 +3,7 @@
 ## Phase 1: Database & Types
 
 - [x] **1.1** Create migration `YYYYMMDDHHMMSS_add_table_no.sql` — add `table_no INT` column to `matches` table with CHECK constraint `table_no > 0`
-- [ ] **1.2** Add index `idx_matches_table_no` on `(round_id, table_no)` for query performance
+- [x] **1.2** Add index `idx_matches_table_no` on `(round_id, table_no)` for query performance
 - [ ] **1.3** Update `Pairing` interface in `src/lib/swiss/types.ts` — add `tableNo: number | null`
 
 ## Phase 2: Pairing Logic
