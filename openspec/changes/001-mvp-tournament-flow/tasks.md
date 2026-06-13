@@ -6,11 +6,11 @@
 
 ## Phase 1: Project Setup
 
-- [ ] **1.1** Initialize Next.js 14 project with TypeScript, App Router, Tailwind
-- [ ] **1.2** Set up Supabase client library (`@supabase/supabase-js`, `@supabase/ssr`)
-- [ ] **1.3** Create `.env.example` with required variables
-- [ ] **1.4** Set up Vitest with TypeScript support
-- [ ] **1.5** Create initial Supabase migration with all tables (tournaments, registrations, tournament_rounds, matches)
+- [x] **1.1** Initialize Next.js 14 project with TypeScript, App Router, Tailwind
+- [x] **1.2** Set up Supabase client library (`@supabase/supabase-js`, `@supabase/ssr`)
+- [x] **1.3** Create `.env.example` with required variables
+- [x] **1.4** Set up Vitest with TypeScript support
+- [x] **1.5** Create initial Supabase migration with all tables (tournaments, registrations, tournament_rounds, matches)
 
 ## Phase 2: Registration Flow
 
