@@ -1,3 +1,5 @@
+import { createClient } from "@/lib/db/server";
+
 const statusLabels: Record<string, string> = {
   draft: "Draft",
   open: "Buka",
@@ -27,5 +29,24 @@ export async function TournamentIndex({
   statusFilter,
   emptyMessage,
 }: Props) {
-  return <main>TODO</main>;
+  const supabase = await createClient();
+
+  const { data: tournaments } = await supabase
+    .from("tournaments")
+    .select("code, name, status, rounds_count")
+    .in("status", statusFilter)
+    .order("created_at", { ascending: false });
+
+  const items = tournaments ?? [];
+
+  if (items.length === 0) {
+    return (
+      <main className="flex-1 px-4 py-16 text-center">
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">{title}</h1>
+        <p className="text-gray-500">{emptyMessage}</p>
+      </main>
+    );
+  }
+
+  return <main>TODO: tournament grid</main>;
 }
