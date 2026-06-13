@@ -60,11 +60,11 @@
 
 ## Phase 7: Round Management (Admin)
 
-- [ ] **7.1** Create round list page per tournament
-- [ ] **7.2** Add "Generate Pairings" button for new round
-- [ ] **7.3** Create pairings display with result input form
-- [ ] **7.4** Create API route to save match results
-- [ ] **7.5** Add round status transitions (pending → ongoing → completed)
+- [x] **7.1** Create round list page per tournament
+- [x] **7.2** Add "Generate Pairings" button for new round
+- [x] **7.3** Create pairings display with result input form
+- [x] **7.4** Create API route to save match results
+- [x] **7.5** Add round status transitions (pending → ongoing → completed)
 
 ## Phase 8: Public Pages
 
