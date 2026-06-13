@@ -74,8 +74,8 @@
 
 ## Phase 5: Manual Verification
 
-- [ ] **5.1** Test navigation: `/` → "Lihat Jadwal" → `/jadwal` index → click tournament → `/jadwal/[code]`
-- [ ] **5.2** Test navigation: `/` → "Klasemen" → `/klasemen` index → click tournament → `/klasemen/[code]`
-- [ ] **5.3** Test navigation: `/admin` → "Lihat Jadwal" → `/jadwal` index
-- [ ] **5.4** Test direct registration: `/daftar/[valid-open-code]` → form pre-selected, no dropdown
-- [ ] **5.5** Test 404: `/daftar/[invalid-code]` and `/daftar/[non-open-code]` → 404 page
+- [x] **5.1** Test navigation: `/` → "Lihat Jadwal" → `/jadwal` index → click tournament → `/jadwal/[code]`
+- [x] **5.2** Test navigation: `/` → "Klasemen" → `/klasemen` index → click tournament → `/klasemen/[code]`
+- [x] **5.3** Test navigation: `/admin` → "Lihat Jadwal" → `/jadwal` index
+- [ ] **5.4** Test direct registration: `/daftar/[valid-open-code]` → form pre-selected, no dropdown (needs real tournament data)
+- [x] **5.5** Test 404: `/daftar/[invalid-code]` and `/daftar/[non-open-code]` → 404 page
