@@ -31,15 +31,15 @@
 
 ## Phase 6: Public TV Display Page
 
-- [ ] **6.1** Create route `src/app/(public)/pairing/[code]/[round]/page.tsx`
-- [ ] **6.2** Fetch tournament and round data by code and round number
-- [ ] **6.3** Implement 3-column layout (17 rows each = max 51 meja)
-- [ ] **6.4** Apply day mode styles — white bg, dark text, gray borders
-- [ ] **6.5** Apply night mode styles — dark bg, light text, dark borders
-- [ ] **6.6** Add theme toggle button to header
-- [ ] **6.7** Implement auto-refresh every 30 seconds
-- [ ] **6.8** Add round navigation (prev/next) in footer
-- [ ] **6.9** Ensure `100vh` height, no scroll
+- [x] **6.1** Create route `src/app/(public)/pairing/[code]/[round]/page.tsx`
+- [x] **6.2** Fetch tournament and round data by code and round number
+- [x] **6.3** Implement 3-column layout (17 rows each = max 51 meja)
+- [x] **6.4** Apply day mode styles — white bg, dark text, gray borders
+- [x] **6.5** Apply night mode styles — dark bg, light text, dark borders
+- [x] **6.6** Add theme toggle button to header
+- [x] **6.7** Implement auto-refresh every 30 seconds
+- [x] **6.8** Add round navigation (prev/next) in footer
+- [x] **6.9** Ensure `100vh` height, no scroll
 
 ## Phase 7: Testing & Verification
 
