@@ -24,10 +24,10 @@
 
 ## Phase 3: Admin Authentication
 
-- [ ] **3.1** Set up Supabase Auth with email/password for admins
-- [ ] **3.2** Create admin login page
-- [ ] **3.3** Create auth middleware for `/admin/*` routes
-- [ ] **3.4** Create admin layout with navigation
+- [x] **3.1** Set up Supabase Auth with email/password for admins
+- [x] **3.2** Create admin login page
+- [x] **3.3** Create auth middleware for `/admin/*` routes
+- [x] **3.4** Create admin layout with navigation
 
 ## Phase 4: Tournament Management (Admin)
 

@@ -72,5 +72,6 @@ Chess tournament management system with online registration, manual payment veri
 - NEVER commit secrets or `.env` files
 - Registration ID format: `CATUR{YEAR}-{SEQUENCE}` (e.g., `CATUR2026-001`)
 - Tournament code validation: `^[a-z0-9_]+$`
+- **Every PR must include "Skenario Test" section in Bahasa Indonesia** (Given/When/Then format, happy path + error + edge cases)
 
 **Path-scoped files:** As codebase grows, add `src/lib/swiss/CLAUDE.md` for domain-specific guidance.
