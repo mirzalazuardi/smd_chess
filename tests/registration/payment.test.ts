@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 
 describe("payment verification rules", () => {
   it("requires admin_id for verify", () => {
-    const body = { paid: true };
+    const body: Record<string, unknown> = { paid: true };
     expect(body.admin_id).toBeUndefined();
   });
 
