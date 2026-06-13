@@ -75,8 +75,8 @@
 
 ## Phase 9: Polish & Deploy
 
-- [ ] **9.1** Add loading states and error handling
-- [ ] **9.2** Test full flow end-to-end
-- [ ] **9.3** Deploy to Vercel
-- [ ] **9.4** Configure Supabase production project
-- [ ] **9.5** Verify free tier limits are respected
+- [x] **9.1** Add loading states and error handling
+- [x] **9.2** Test full flow end-to-end
+- [x] **9.3** Deploy to Vercel
+- [x] **9.4** Configure Supabase production project
+- [x] **9.5** Verify free tier limits are respected
