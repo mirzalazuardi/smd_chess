@@ -22,6 +22,20 @@ interface Props {
 import Link from "next/link";
 import { createClient } from "@/lib/db/server";
 
+const statusLabels: Record<string, string> = {
+  draft: "Draft",
+  open: "Buka",
+  ongoing: "Berlangsung",
+  finished: "Selesai",
+};
+
+const statusStyles: Record<string, string> = {
+  draft: "bg-gray-100 text-gray-600",
+  open: "bg-green-100 text-green-700",
+  ongoing: "bg-blue-100 text-blue-700",
+  finished: "bg-yellow-100 text-yellow-700",
+};
+
 export async function TournamentIndex({
   title, description, linkPrefix, statusFilter, emptyMessage,
 }: Props) {
@@ -63,7 +77,9 @@ export async function TournamentIndex({
             <h2 className="font-semibold text-gray-900">{t.name}</h2>
             <p className="text-xs text-gray-400 font-mono mt-1">{t.code}</p>
             <div className="flex items-center gap-2 mt-2">
-              <StatusBadge status={t.status} />
+              <span className={`text-xs px-2 py-0.5 rounded-full ${statusStyles[t.status]}`}>
+                {statusLabels[t.status]}
+              </span>
               <span className="text-xs text-gray-400">
                 {t.rounds_count} ronde
               </span>
@@ -75,12 +91,6 @@ export async function TournamentIndex({
   );
 }
 ```
-
-**Status badge:** Gunakan style yang sama dengan admin page:
-- `draft` → gray
-- `open` → green
-- `ongoing` → blue
-- `finished` → gray
 
 ---
 
