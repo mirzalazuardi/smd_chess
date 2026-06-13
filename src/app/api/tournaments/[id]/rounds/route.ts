@@ -147,6 +147,7 @@ export async function POST(
     round_id: round.id,
     player1_id: pair.white.id,
     player2_id: pair.black?.id ?? null,
+    table_no: pair.tableNo,
     status: pair.black ? "pending" : "completed",
     player1_score: pair.black ? null : 1,
     player2_score: pair.black ? null : null,

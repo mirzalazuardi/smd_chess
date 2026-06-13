@@ -15,7 +15,7 @@
 
 ## Phase 3: API
 
-- [ ] **3.1** Update `POST /api/rounds/[id]/generate/route.ts` — include `table_no` in match insert
+- [x] **3.1** Update `POST /api/rounds/[id]/generate/route.ts` — include `table_no` in match insert
 
 ## Phase 4: Admin UI
 
