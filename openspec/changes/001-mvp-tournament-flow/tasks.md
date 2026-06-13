@@ -14,13 +14,13 @@
 
 ## Phase 2: Registration Flow
 
-- [ ] **2.1** Create Zod schemas for registration validation
-- [ ] **2.2** Build registration form component (all fields, file upload)
-- [ ] **2.3** Create API route `POST /api/registrations` — validate, upload proof, insert record
-- [ ] **2.4** Generate registration ID in format `CATUR{YEAR}-{SEQ}`
-- [ ] **2.5** Add duplicate email check per tournament
-- [ ] **2.6** Create registration success page with registration ID display
-- [ ] **2.7** Write tests for registration validation
+- [x] **2.1** Create Zod schemas for registration validation
+- [x] **2.2** Build registration form component (all fields, file upload)
+- [x] **2.3** Create API route `POST /api/registrations` — validate, upload proof, insert record
+- [x] **2.4** Generate registration ID in format `CATUR{YEAR}-{SEQ}`
+- [x] **2.5** Add duplicate email check per tournament
+- [x] **2.6** Create registration success page with registration ID display
+- [x] **2.7** Write tests for registration validation
 
 ## Phase 3: Admin Authentication
 
