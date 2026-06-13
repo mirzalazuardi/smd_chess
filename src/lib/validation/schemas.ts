@@ -16,6 +16,7 @@ export const registrationSchema = z
     school_name: z.string().max(100).optional(),
     wa_number: z
       .string()
+      .regex(/^[0-9]+$/, "Nomor WA hanya boleh berisi angka")
       .min(10, "Nomor WA minimal 10 digit")
       .max(15, "Nomor WA maksimal 15 digit"),
     tournament_code: tournamentCodeSchema,

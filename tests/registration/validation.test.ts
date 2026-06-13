@@ -90,4 +90,86 @@ describe("registrationSchema", () => {
       registrationSchema.parse({ ...validRegistration, chess_rating: -1 }),
     ).toThrow();
   });
+
+  it("rejects chess_rating above 3000", () => {
+    expect(() =>
+      registrationSchema.parse({ ...validRegistration, chess_rating: 3001 }),
+    ).toThrow();
+  });
+
+  it("rejects invalid student_status", () => {
+    expect(() =>
+      registrationSchema.parse({ ...validRegistration, student_status: "mahasiswa" }),
+    ).toThrow();
+  });
+
+  it("rejects short wa_number", () => {
+    expect(() =>
+      registrationSchema.parse({ ...validRegistration, wa_number: "0812" }),
+    ).toThrow();
+  });
+
+  it("rejects wa_number with non-digit characters", () => {
+    expect(() =>
+      registrationSchema.parse({ ...validRegistration, wa_number: "0812-3456-7890" }),
+    ).toThrow();
+  });
+
+  it("rejects empty tournament_code", () => {
+    expect(() =>
+      registrationSchema.parse({ ...validRegistration, tournament_code: "" }),
+    ).toThrow();
+  });
+});
+
+describe("registrationSchema — pelajar rules", () => {
+  const base = {
+    full_name: "Ani",
+    email: "ani@school.id",
+    student_status: "pelajar" as const,
+    wa_number: "081234567890",
+    tournament_code: "sd_open_2026",
+  };
+
+  it("rejects pelajar without school_name", () => {
+    expect(() => registrationSchema.parse(base)).toThrow();
+  });
+
+  it("accepts pelajar with school_name", () => {
+    expect(
+      registrationSchema.parse({ ...base, school_name: "SD Negeri 1" }).school_name,
+    ).toBe("SD Negeri 1");
+  });
+});
+
+describe("tournamentCodeSchema — edge cases", () => {
+  it("accepts code with only letters", () => {
+    expect(tournamentCodeSchema.parse("sumedangopen")).toBe("sumedangopen");
+  });
+
+  it("accepts code with numbers only", () => {
+    expect(tournamentCodeSchema.parse("2026")).toBe("2026");
+  });
+
+  it("rejects empty string", () => {
+    expect(() => tournamentCodeSchema.parse("")).toThrow();
+  });
+
+  it("rejects code with spaces", () => {
+    expect(() => tournamentCodeSchema.parse("sumedang open")).toThrow();
+  });
+
+  it("accepts minimum 3 char code", () => {
+    expect(tournamentCodeSchema.parse("abc")).toBe("abc");
+  });
+});
+
+describe("generateRegistrationId — edge cases", () => {
+  it("handles single-digit sequence", () => {
+    expect(generateRegistrationId(2025, 5)).toBe("CATUR2025-005");
+  });
+
+  it("handles sequence above 999", () => {
+    expect(generateRegistrationId(2025, 1000)).toBe("CATUR2025-1000");
+  });
 });
