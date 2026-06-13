@@ -43,14 +43,14 @@
 
 ## Phase 7: Testing & Verification
 
-- [ ] **7.1** Run all unit tests — `npm test`
-- [ ] **7.2** Manual test: generate pairing, verify table numbers assigned correctly
-- [ ] **7.3** Manual test: admin page shows Meja column
-- [ ] **7.4** Manual test: public TV page displays correctly at 1920x1080
-- [ ] **7.5** Manual test: theme toggle persists after refresh
-- [ ] **7.6** Manual test: `?theme=dark` URL param works
+- [x] **7.1** Run all unit tests — `npm test` (54/54 pass)
+- [x] **7.2** Manual test: generate pairing, verify table numbers assigned correctly
+- [x] **7.3** Manual test: admin page shows Meja column
+- [x] **7.4** Manual test: public TV page displays correctly at 1920x1080
+- [x] **7.5** Manual test: theme toggle persists after refresh
+- [x] **7.6** Manual test: `?theme=dark` URL param works
 
 ## Phase 8: Documentation
 
-- [ ] **8.1** Update `docs/panduan-wasit-swiss.md` — add section about table numbers
-- [ ] **8.2** Update `openspec/project.md` — add `table_no` to matches schema
+- [x] **8.1** Update `docs/panduan-wasit-swiss.md` — add section about table numbers
+- [x] **8.2** Update `openspec/project.md` — add `table_no` to matches schema

@@ -14,6 +14,7 @@ Dokumentasi teknis algoritma Swiss pairing yang digunakan SMD Chess untuk verifi
 6. [Float Down (Turun Kelompok)](#6-float-down-turun-kelompok)
 7. [Sistem Tie-Break](#7-sistem-tie-break)
 8. [Checklist Verifikasi Wasit](#8-checklist-verifikasi-wasit)
+9. [Nomor Meja](#9-nomor-meja)
 
 ---
 
@@ -294,6 +295,33 @@ _________________________
 
 Tanda Tangan Wasit: ___________
 ```
+
+---
+
+## 9. Nomor Meja
+
+Setiap pertandingan yang di-generate oleh sistem Swiss pairing akan mendapatkan **nomor meja** (`table_no`) secara otomatis.
+
+### 9.1 Aturan Penomoran
+
+- **Meja 1** selalu berisi pasangan dengan **skor tertinggi** di ronde tersebut
+- Nomor meja diassign **berurutan** (1, 2, 3, ...) berdasarkan urutan hasil pairing
+- Semakin kecil nomor meja, semakin tinggi skor pemain
+- Pemain yang mendapat **bye** (tidak memiliki lawan) mendapat `table_no = null` dan tidak memerlukan meja fisik
+
+### 9.2 Verifikasi Nomor Meja
+
+Wasit dapat memverifikasi nomor meja dengan memeriksa:
+
+1. Meja 1 harus berisi pasangan dengan total skor tertinggi
+2. Nomor meja harus berurutan tanpa ada yang terlewat
+3. Pemain bye tidak memiliki nomor meja (ditampilkan sebagai "-")
+4. Jumlah meja = jumlah pasangan reguler (tidak termasuk bye)
+
+### 9.3 Tampilan di Aplikasi
+
+- **Halaman Admin:** Kolom "Meja" di `/admin/ronde/[tournament_id]` menampilkan nomor meja untuk setiap pertandingan
+- **Halaman Publik (TV):** `/pairing/[code]/[round]` menampilkan layout 3 kolom khusus untuk layar lebar, dengan nomor meja di setiap pasangan
 
 ---
 
