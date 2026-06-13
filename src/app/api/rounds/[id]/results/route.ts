@@ -1,11 +1,14 @@
 import { NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/db/server";
+import { requireAdmin } from "@/lib/auth/guard";
 
 export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
   const { id: roundId } = await params;
+  const { errorResponse } = await requireAdmin();
+  if (errorResponse) return errorResponse;
   const supabase = await createServiceClient();
 
   try {

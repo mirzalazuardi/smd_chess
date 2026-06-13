@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createServiceClient } from "@/lib/db/server";
+import { requireAdmin } from "@/lib/auth/guard";
 import { tournamentCodeSchema } from "@/lib/validation/schemas";
 
 const createSchema = z.object({
@@ -36,6 +37,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const { errorResponse } = await requireAdmin();
+  if (errorResponse) return errorResponse;
+
   try {
     const body = await request.json();
     const parsed = createSchema.safeParse(body);

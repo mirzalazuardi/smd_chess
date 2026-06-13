@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
-
-type CookieToSet = { name: string; value: string; options: CookieOptions };
+import { cookies, headers } from "next/headers";
+import { createServerClient } from "@supabase/ssr";
+import type { CookieToSet } from "@/lib/db/types";
 import { redirect } from "next/navigation";
 import { LogoutButton } from "./logout-button";
 
@@ -21,7 +20,9 @@ async function getUser() {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options),
             );
-          } catch {}
+          } catch (err) {
+            if (process.env.NODE_ENV === "development") console.error("Cookie set error:", err);
+          }
         },
       },
     },
@@ -39,9 +40,14 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   const user = await getUser();
+  const pathname = (await headers()).get("x-pathname") || "";
+
+  if (!user && !pathname.endsWith("/admin/login")) {
+    redirect("/admin/login");
+  }
 
   if (!user) {
-    redirect("/admin/login");
+    return <>{children}</>;
   }
 
   return (

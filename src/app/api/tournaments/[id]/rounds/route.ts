@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/db/server";
+import { requireAdmin } from "@/lib/auth/guard";
 import { generateSwissPairings } from "@/lib/swiss/pairing";
 import type { Player } from "@/lib/swiss/types";
 
@@ -31,6 +32,8 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> },
 ) {
   const { id: tournamentId } = await params;
+  const { errorResponse } = await requireAdmin();
+  if (errorResponse) return errorResponse;
   const supabase = await createServiceClient();
 
   const { data: registrations } = await supabase

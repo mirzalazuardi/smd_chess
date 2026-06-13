@@ -76,7 +76,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { data: existing, error: dupError } = await supabase
+    const { data: existing } = await supabase
       .from("registrations")
       .select("id")
       .eq("tournament_id", tournament.id)
@@ -115,29 +115,47 @@ export async function POST(request: Request) {
     const proofUrl = publicUrlData.publicUrl;
 
     const year = currentYear();
-    const { count } = await supabase
-      .from("registrations")
-      .select("*", { count: "exact", head: true })
-      .like("registration_id", `CATUR${year}-%`);
+    let registrationId: string;
 
-    const nextSeq = (count ?? 0) + 1;
-    const registrationId = generateRegistrationId(year, nextSeq);
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const { count } = await supabase
+        .from("registrations")
+        .select("*", { count: "exact", head: true })
+        .like("registration_id", `CATUR${year}-%`);
 
-    const { error: insertError } = await supabase.from("registrations").insert({
-      registration_id: registrationId,
-      tournament_id: tournament.id,
-      full_name: data.full_name,
-      email: data.email,
-      student_status: data.student_status,
-      school_name: data.school_name ?? null,
-      wa_number: data.wa_number,
-      chess_rating: data.chess_rating ?? null,
-      proof_transfer_url: proofUrl,
-      paid: false,
-      is_active: true,
-    });
+      registrationId = generateRegistrationId(year, (count ?? 0) + 1);
 
-    if (insertError) {
+      const { error: insertError } = await supabase.from("registrations").insert({
+        registration_id: registrationId,
+        tournament_id: tournament.id,
+        full_name: data.full_name,
+        email: data.email,
+        student_status: data.student_status,
+        school_name: data.school_name ?? null,
+        wa_number: data.wa_number,
+        chess_rating: data.chess_rating ?? null,
+        proof_transfer_url: proofUrl,
+        paid: false,
+        is_active: true,
+      });
+
+      if (!insertError) {
+        return NextResponse.json({ registration_id: registrationId }, { status: 201 });
+      }
+
+      if (insertError.code === "23505") {
+        // Duplicate registration_id — retry
+        if (attempt === 2) {
+          await supabase.storage.from(STORAGE_BUCKET).remove([filePath]);
+          return NextResponse.json(
+            { error: "Gagal membuat ID pendaftaran, coba lagi" },
+            { status: 500 },
+          );
+        }
+        continue;
+      }
+
+      // Other insert error
       await supabase.storage.from(STORAGE_BUCKET).remove([filePath]);
 
       if (insertError.code === "23505") {
@@ -152,8 +170,6 @@ export async function POST(request: Request) {
         { status: 500 },
       );
     }
-
-    return NextResponse.json({ registration_id: registrationId }, { status: 201 });
   } catch {
     return NextResponse.json(
       { error: "Terjadi kesalahan internal" },

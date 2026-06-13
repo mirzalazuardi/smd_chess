@@ -1,7 +1,6 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-
-type CookieToSet = { name: string; value: string; options: CookieOptions };
+import type { CookieToSet } from "./types";
 
 export async function createClient() {
   const cookieStore = await cookies();
@@ -19,8 +18,8 @@ export async function createClient() {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options),
             );
-          } catch {
-            // Called from Server Component — ignore, middleware handles refresh
+          } catch (err) {
+            if (process.env.NODE_ENV === "development") console.error("Cookie set error:", err);
           }
         },
       },

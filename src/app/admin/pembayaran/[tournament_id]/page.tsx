@@ -132,17 +132,10 @@ export default async function PaymentDetailPage({
                     />
                   </td>
                   <td className="px-4 py-3">
-                    {user ? (
-                      <VerifyButton
-                        registrationId={r.id}
-                        adminId={user.id}
-                        initialPaid={r.paid}
-                      />
-                    ) : (
-                      <span className="text-xs text-gray-400">
-                        {r.paid ? "Lunas" : "Belum"}
-                      </span>
-                    )}
+                    <VerifyButton
+                      registrationId={r.id}
+                      initialPaid={r.paid}
+                    />
                   </td>
                 </tr>
               ))}
