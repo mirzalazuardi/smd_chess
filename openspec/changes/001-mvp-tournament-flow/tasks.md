@@ -46,17 +46,17 @@
 
 ## Phase 6: Swiss Pairing Engine
 
-- [ ] **6.1** Create Swiss pairing algorithm in `src/lib/swiss/`
+- [x] **6.1** Create Swiss pairing algorithm in `src/lib/swiss/`
   - Group players by score
   - Sort by score desc, then rating desc
   - Pair within score groups
   - Avoid repeat pairings
   - Alternate colors (track last color)
   - Handle odd player (bye)
-- [ ] **6.2** Write comprehensive tests for pairing logic
-- [ ] **6.3** Create standings calculator with Buchholz tie-breaker
-- [ ] **6.4** Write tests for standings calculation
-- [ ] **6.5** Ensure all queries filter `paid = TRUE AND is_active = TRUE`
+- [x] **6.2** Write comprehensive tests for pairing logic
+- [x] **6.3** Create standings calculator with Buchholz tie-breaker
+- [x] **6.4** Write tests for standings calculation
+- [x] **6.5** Ensure all queries filter `paid = TRUE AND is_active = TRUE`
 
 ## Phase 7: Round Management (Admin)
 
