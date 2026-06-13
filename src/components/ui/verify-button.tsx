@@ -4,11 +4,10 @@ import { useState } from "react";
 
 interface Props {
   registrationId: string;
-  adminId: string;
   initialPaid: boolean;
 }
 
-export function VerifyButton({ registrationId, adminId, initialPaid }: Props) {
+export function VerifyButton({ registrationId, initialPaid }: Props) {
   const [paid, setPaid] = useState(initialPaid);
   const [loading, setLoading] = useState(false);
 
@@ -18,7 +17,7 @@ export function VerifyButton({ registrationId, adminId, initialPaid }: Props) {
       const res = await fetch(`/api/registrations/${registrationId}/verify`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ paid: !paid, admin_id: adminId }),
+        body: JSON.stringify({ paid: !paid }),
       });
 
       if (res.ok) {

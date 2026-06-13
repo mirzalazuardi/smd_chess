@@ -2,10 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
-
-type CookieToSet = { name: string; value: string; options: CookieOptions };
+import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import type { CookieToSet } from "@/lib/db/types";
 
 export async function loginAction(
   _prevState: { error: string | null },

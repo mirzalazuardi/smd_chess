@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createServiceClient } from "@/lib/db/server";
+import { createServiceClient, createClient } from "@/lib/db/server";
 
 export async function PATCH(
   request: Request,
@@ -8,16 +8,20 @@ export async function PATCH(
   const { id } = await params;
 
   try {
-    const body = await request.json();
-    const paid = body.paid === true;
-    const adminId = body.admin_id as string | undefined;
+    const client = await createClient();
+    const {
+      data: { user },
+    } = await client.auth.getUser();
 
-    if (!adminId) {
+    if (!user) {
       return NextResponse.json(
-        { error: "ID admin diperlukan" },
-        { status: 400 },
+        { error: "Harus login sebagai admin" },
+        { status: 401 },
       );
     }
+
+    const body = await request.json();
+    const paid = body.paid === true;
 
     const supabase = await createServiceClient();
 
@@ -26,7 +30,7 @@ export async function PATCH(
       .update({
         paid,
         payment_verified_at: paid ? new Date().toISOString() : null,
-        payment_verified_by: paid ? adminId : null,
+        payment_verified_by: paid ? user.id : null,
       })
       .eq("id", id)
       .select()

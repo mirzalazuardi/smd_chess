@@ -1,7 +1,6 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-
-type CookieToSet = { name: string; value: string; options: CookieOptions };
+import type { CookieToSet } from "@/lib/db/types";
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({
@@ -47,6 +46,8 @@ export async function middleware(request: NextRequest) {
   if (isLoginPage && user) {
     return NextResponse.redirect(new URL("/admin", request.url));
   }
+
+  response.headers.set("x-pathname", request.nextUrl.pathname);
 
   return response;
 }

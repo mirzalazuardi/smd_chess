@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createServiceClient } from "@/lib/db/server";
+import { requireAdmin } from "@/lib/auth/guard";
 import { tournamentCodeSchema } from "@/lib/validation/schemas";
 
 const updateSchema = z.object({
@@ -39,6 +40,8 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
+  const { errorResponse } = await requireAdmin();
+  if (errorResponse) return errorResponse;
 
   try {
     const body = await request.json();
@@ -87,6 +90,8 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
+  const { errorResponse } = await requireAdmin();
+  if (errorResponse) return errorResponse;
   const supabase = await createServiceClient();
 
   const { error } = await supabase
