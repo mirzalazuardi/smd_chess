@@ -38,11 +38,11 @@
 
 ## Phase 5: Payment Verification (Admin)
 
-- [ ] **5.1** Create registrations list page per tournament (filterable by paid status)
-- [ ] **5.2** Add proof image viewer (modal or inline)
-- [ ] **5.3** Create toggle button to set `paid = TRUE/FALSE`
-- [ ] **5.4** Record `payment_verified_at` and `payment_verified_by`
-- [ ] **5.5** Write tests for payment status filtering
+- [x] **5.1** Create registrations list page per tournament (filterable by paid status)
+- [x] **5.2** Add proof image viewer (modal or inline)
+- [x] **5.3** Create toggle button to set `paid = TRUE/FALSE`
+- [x] **5.4** Record `payment_verified_at` and `payment_verified_by`
+- [x] **5.5** Write tests for payment status filtering
 
 ## Phase 6: Swiss Pairing Engine
 
