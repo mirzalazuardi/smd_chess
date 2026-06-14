@@ -18,7 +18,7 @@ Panduan lengkap untuk mendaftar dan mengikuti turnamen catur melalui SMD Chess.
 
 ### Sebelum Mendaftar, Siapkan:
 
-- **Bukti transfer pembayaran** (foto/screenshot, format JPG/PNG, maksimal 5MB)
+- **Bukti transfer pembayaran** (foto/screenshot, format JPG/PNG, maksimal 400KB)
 - **Nomor WhatsApp** yang aktif
 - **Rating catur** (opsional, jika punya)
 
@@ -31,7 +31,7 @@ Panduan lengkap untuk mendaftar dan mengikuti turnamen catur melalui SMD Chess.
 | Field | Keterangan | Contoh |
 |-------|-----------|--------|
 | **Nama Lengkap** | Nama sesuai KTP/kartu pelajar | Budi Santoso |
-| **Email** | Email aktif untuk konfirmasi | budi@email.com |
+| **Email** | Opsional. Email aktif untuk konfirmasi | budi@email.com |
 | **Status** | Pilih **Pelajar** atau **Umum** | Umum |
 | **Nama Sekolah** | Wajib diisi jika status Pelajar | SMA Negeri 1 Sumedang |
 | **Nomor WhatsApp** | Hanya angka, 10-15 digit | 081234567890 |
@@ -59,7 +59,7 @@ ID Pendaftaran Anda:
 |-------------|--------|
 | "Email sudah terdaftar" | Email yang sama tidak bisa mendaftar dua kali di turnamen yang sama |
 | "File harus berupa gambar" | Pastikan bukti transfer dalam format JPG/PNG |
-| "Ukuran file maksimal 5MB" | Kompres atau resize gambar bukti transfer |
+| "Ukuran file maksimal 400KB" | Kompres atau resize gambar bukti transfer (max 400KB) |
 | "Kode turnamen tidak ditemukan" | Pastikan memilih turnamen yang benar |
 | "Pendaftaran sudah ditutup" | Turnamen sudah dimulai, tidak bisa mendaftar lagi |
 
@@ -84,11 +84,15 @@ Saat ini pengecekan status dilakukan dengan menghubungi panitia melalui WhatsApp
 
 Setelah pairing digenerate oleh admin, Anda bisa melihat jadwal pertandingan:
 
-1. Buka: `https://[domain]/jadwal/[kode-turnamen]`
+1. Buka halaman jadwal: `https://[domain]/jadwal`
+
+   Halaman ini menampilkan daftar turnamen yang tersedia.
+
+2. Pilih turnamen yang ingin dilihat jadwalnya
+
+3. Anda akan diarahkan ke: `https://[domain]/jadwal/[kode-turnamen]`
 
    Contoh: `https://[domain]/jadwal/sumedang_open_2026`
-
-2. Halaman akan menampilkan semua ronde dengan pasangan pertandingan
 
 **Cara membaca jadwal:**
 
@@ -113,11 +117,15 @@ Ronde 1                              Selesai
 
 ## 4. Melihat Klasemen
 
-1. Buka: `https://[domain]/klasemen/[kode-turnamen]`
+1. Buka halaman klasemen: `https://[domain]/klasemen`
+
+   Halaman ini menampilkan daftar turnamen yang tersedia.
+
+2. Pilih turnamen yang ingin dilihat klasemennya
+
+3. Anda akan diarahkan ke: `https://[domain]/klasemen/[kode-turnamen]`
 
    Contoh: `https://[domain]/klasemen/sumedang_open_2026`
-
-2. Halaman menampilkan peringkat semua peserta
 
 **Cara membaca klasemen:**
 
@@ -155,6 +163,9 @@ A: Ya, dengan email yang sama Anda bisa mendaftar di turnamen yang berbeda.
 
 **Q: Saya salah mengisi data, bagaimana cara mengubahnya?**
 A: Hubungi panitia untuk perbaikan data. Fitur edit mandiri akan hadir di update berikutnya.
+
+**Q: Apakah email wajib diisi?**
+A: Tidak wajib. Email bersifat opsional. Namun jika diisi, email yang sama tidak bisa mendaftar dua kali di turnamen yang sama.
 
 **Q: Apakah rating catur wajib diisi?**
 A: Tidak wajib. Jika Anda tidak memiliki rating resmi, kosongkan saja.

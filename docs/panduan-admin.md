@@ -144,11 +144,11 @@ Sistem akan:
 Klasemen bisa dilihat dari dua tempat:
 
 ### Admin
-1. Buka halaman publik: `/klasemen/[kode-turnamen]`
+1. Buka halaman klasemen: `/klasemen` → pilih turnamen → `/klasemen/[kode-turnamen]`
    Contoh: `https://[domain]/klasemen/sumedang_open_2026`
 
 ### Publik
-Peserta bisa melihat klasemen langsung dari link yang sama.
+Peserta bisa melihat klasemen langsung dari link yang sama. Halaman `/jadwal` dan `/klasemen` juga sudah bisa diakses tanpa kode turnamen — akan menampilkan daftar turnamen yang tersedia.
 
 **Kolom klasemen:**
 
@@ -169,6 +169,7 @@ Peserta bisa melihat klasemen langsung dari link yang sama.
 ## Tips Admin
 
 - **Sebelum membuka pendaftaran:** Pastikan status turnamen sudah **Pendaftaran Buka**
+- **Link langsung pendaftaran:** Bagikan link `/daftar/[kode-turnamen]` (contoh: `/daftar/sumedang_open_2026`) ke peserta untuk registrasi langsung tanpa memilih turnamen. Link ini hanya berfungsi jika status turnamen **Pendaftaran Buka**.
 - **Verifikasi tepat waktu:** Cek pembayaran berkala agar peserta bisa masuk pairing
 - **Pairing di akhir:** Generate pairing untuk ronde berikutnya hanya setelah semua hasil ronde sebelumnya diinput
 - **Kode turnamen:** Gunakan format konsisten, contoh: `kabupaten_tahun`, `sekolah_2026`
@@ -184,3 +185,4 @@ Peserta bisa melihat klasemen langsung dari link yang sama.
 | Generate pairing error "Ronde sebelumnya belum selesai" | Input semua hasil ronde sebelumnya dulu |
 | Peserta tidak muncul di klasemen | Cek apakah peserta sudah Lunas |
 | Kode turnamen sudah digunakan | Gunakan kode yang berbeda (huruf kecil, angka, underscore) |
+| Peserta gagal upload bukti transfer | Pastikan file gambar (JPG/PNG) dan ukuran maksimal 400KB |
