@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { cookies, headers } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
 import type { CookieToSet } from "@/lib/db/types";
@@ -57,8 +58,15 @@ export default async function AdminLayout({
           <div className="flex items-center gap-6">
             <Link
               href="/admin"
-              className="font-bold text-gray-900 hover:text-blue-600 transition-colors"
+              className="flex items-center gap-2 font-bold text-gray-900 hover:text-blue-600 transition-colors"
             >
+              <Image
+                src="/logo-percasi.jpg"
+                alt="PERCASI"
+                width={32}
+                height={32}
+                className="rounded"
+              />
               SMD Admin
             </Link>
             <nav className="hidden sm:flex items-center gap-4">

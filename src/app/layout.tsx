@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Header } from "@/components/ui/header";
 import { Footer } from "@/components/ui/footer";
 import "./globals.css";
 
@@ -16,6 +17,7 @@ export default function RootLayout({
   return (
     <html lang="id" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
+        <Header />
         {children}
         <Footer />
       </body>
