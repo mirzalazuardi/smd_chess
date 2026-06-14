@@ -43,7 +43,7 @@ export async function TournamentIndex({
   if (items.length === 0) {
     return (
       <main className="flex-1 px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">{title}</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{title}</h1>
         <p className="text-gray-500">{emptyMessage}</p>
       </main>
     );
@@ -52,7 +52,7 @@ export async function TournamentIndex({
   return (
     <main className="flex-1 max-w-4xl mx-auto px-4 py-8">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{title}</h1>
         {description && (
           <p className="text-sm text-gray-500 mt-1">{description}</p>
         )}
@@ -65,7 +65,7 @@ export async function TournamentIndex({
             href={`${linkPrefix}/${t.code}`}
             className="rounded-lg border border-gray-200 p-4 hover:border-blue-300 hover:shadow-sm transition-all"
           >
-            <h2 className="font-semibold text-gray-900">{t.name}</h2>
+            <h2 className="font-semibold text-gray-900 dark:text-white">{t.name}</h2>
             <p className="text-xs text-gray-400 font-mono mt-1">{t.code}</p>
             <div className="flex items-center gap-2 mt-2">
               <span className={`text-xs px-2 py-0.5 rounded-full ${statusStyles[t.status]}`}>

@@ -25,7 +25,7 @@ export default async function TournamentListPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Turnamen</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Turnamen</h1>
         <Link
           href="/admin/turnamen/baru"
           className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"

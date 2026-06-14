@@ -6,7 +6,7 @@ export default function LoginPage() {
     <main className="flex-1 flex items-center justify-center px-4 py-16">
       <div className="w-full max-w-sm space-y-6">
         <div className="text-center space-y-2">
-          <h1 className="text-2xl font-bold text-gray-900">Admin Login</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Admin Login</h1>
           <p className="text-sm text-gray-500">
             Masuk untuk mengelola turnamen
           </p>

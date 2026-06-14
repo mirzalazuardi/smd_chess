@@ -51,7 +51,7 @@ export default async function JadwalPage({ params }: Props) {
 
   return (
     <main className="flex-1 max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-1">
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
         {tournament.name}
       </h1>
       <div className="flex items-center justify-between mb-8">
@@ -68,7 +68,7 @@ export default async function JadwalPage({ params }: Props) {
           {(rounds as RoundRow[]).map((round) => (
             <div key={round.id} className="rounded-lg border border-gray-200 overflow-hidden">
               <div className="px-4 py-3 bg-gray-50 border-b">
-                <h2 className="font-semibold text-gray-900">
+                <h2 className="font-semibold text-gray-900 dark:text-white">
                   Ronde {round.round_number}
                   {round.status === "completed" && (
                     <span className="ml-2 text-xs text-green-600 font-normal">

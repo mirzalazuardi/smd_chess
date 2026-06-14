@@ -11,7 +11,7 @@ export default async function RoundListPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
         Manajemen Ronde
       </h1>
 
@@ -28,7 +28,7 @@ export default async function RoundListPage() {
               className="rounded-lg border border-gray-200 p-4 hover:border-blue-300 hover:shadow-sm transition-all"
             >
               <p className="font-mono text-xs text-gray-400 mb-1">{t.code}</p>
-              <p className="font-medium text-gray-900">{t.name}</p>
+              <p className="font-medium text-gray-900 dark:text-white">{t.name}</p>
               <p className="text-xs text-gray-500 mt-2">
                 {t.rounds_count} ronde &middot; {t.status === "ongoing" ? "Berlangsung" : "Pendaftaran Buka"}
               </p>

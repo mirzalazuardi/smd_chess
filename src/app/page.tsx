@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <main className="flex flex-1 flex-col items-center justify-center px-4 py-24">
       <div className="max-w-lg text-center space-y-6">
-        <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
           SMD Chess
         </h1>
         <p className="text-lg text-gray-600">

@@ -70,7 +70,7 @@ export default async function PaymentDetailPage({
         <p className="text-sm text-gray-500 font-mono">{tournament.code}</p>
       </div>
 
-      <h1 className="text-2xl font-bold text-gray-900 mb-1">
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
         {tournament.name}
       </h1>
       <p className="text-sm text-gray-500 mb-6">

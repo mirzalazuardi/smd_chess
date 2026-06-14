@@ -83,7 +83,7 @@ export default async function RoundDetailPage({ params }: Props) {
 
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{tournament.name}</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{tournament.name}</h1>
           <p className="text-sm text-gray-500 mt-1">
             {rounds?.length ?? 0} dari {tournament.rounds_count} ronde
           </p>
@@ -106,7 +106,7 @@ export default async function RoundDetailPage({ params }: Props) {
               className="rounded-lg border border-gray-200 overflow-hidden"
             >
               <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b">
-                <h2 className="font-semibold text-gray-900">
+                <h2 className="font-semibold text-gray-900 dark:text-white">
                   Ronde {round.round_number}
                 </h2>
                 <span
@@ -139,7 +139,7 @@ export default async function RoundDetailPage({ params }: Props) {
                     key={match.id}
                     className="flex items-center gap-4 py-2 text-sm"
                   >
-                    <span className="min-w-[40px] text-center font-mono font-bold text-gray-900">
+                    <span className="min-w-[40px] text-center font-mono font-bold text-gray-900 dark:text-white">
                       {match.table_no ?? "-"}
                     </span>
 

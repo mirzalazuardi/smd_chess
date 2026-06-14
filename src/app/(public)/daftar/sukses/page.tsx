@@ -27,7 +27,7 @@ export default async function SuksesPage({ searchParams }: Props) {
           </svg>
         </div>
 
-        <h1 className="text-2xl font-bold text-gray-900">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           Pendaftaran Berhasil!
         </h1>
 

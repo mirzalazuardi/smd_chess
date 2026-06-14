@@ -30,7 +30,7 @@ export default async function KlasemenPage({ params }: Props) {
   if (!registrations || registrations.length === 0) {
     return (
       <main className="flex-1 max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-1">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
           {tournament.name}
         </h1>
         <p className="text-sm text-gray-500 font-mono mb-8">
@@ -117,7 +117,7 @@ export default async function KlasemenPage({ params }: Props) {
 
   return (
     <main className="flex-1 max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-1">
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
         {tournament.name}
       </h1>
       <div className="flex items-center justify-between mb-8">

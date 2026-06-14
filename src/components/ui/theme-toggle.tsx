@@ -43,11 +43,13 @@ function applyTheme(theme: Theme) {
 
 export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>("light");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const initial = resolveInitialTheme();
     setTheme(initial);
     applyTheme(initial);
+    setMounted(true);
   }, []);
 
   function toggle() {
@@ -55,6 +57,17 @@ export function ThemeToggle() {
     setTheme(next);
     applyTheme(next);
     localStorage.setItem("theme", next);
+  }
+
+  if (!mounted) {
+    return (
+      <button
+        className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+        aria-label="Toggle theme"
+      >
+        <span className="text-lg opacity-0">🌙</span>
+      </button>
+    );
   }
 
   return (

@@ -23,7 +23,7 @@ export default async function DaftarByCodePage({ params }: Props) {
     <main className="flex-1 px-4 py-12">
       <div className="max-w-lg mx-auto space-y-6">
         <div className="text-center space-y-2">
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
             Pendaftaran — {tournament.name}
           </h1>
         </div>

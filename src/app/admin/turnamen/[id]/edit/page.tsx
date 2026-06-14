@@ -22,7 +22,7 @@ export default async function EditTournamentPage({ params }: Props) {
 
   return (
     <div className="max-w-lg mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
         Edit Turnamen
       </h1>
       <TournamentForm
