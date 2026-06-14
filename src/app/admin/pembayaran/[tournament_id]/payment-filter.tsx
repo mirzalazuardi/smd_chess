@@ -17,7 +17,7 @@ export function PaymentFilter({ current }: Props) {
   }
 
   const activeClass = "bg-blue-600 text-white";
-  const inactiveClass = "bg-white text-gray-600 border border-gray-300 hover:bg-gray-50";
+  const inactiveClass = "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700";
 
   return (
     <div className="flex gap-2 mb-6">

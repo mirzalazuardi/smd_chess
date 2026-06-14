@@ -111,7 +111,7 @@ export default async function PaymentDetailPage({
             </thead>
             <tbody className="divide-y divide-gray-100">
               {registrations.map((r) => (
-                <tr key={r.id} className="hover:bg-gray-50">
+                <tr key={r.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
                   <td className="px-4 py-3 font-mono text-xs">{r.registration_id}</td>
                   <td className="px-4 py-3">
                     <p className="font-medium">{r.full_name}</p>

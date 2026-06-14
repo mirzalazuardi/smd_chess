@@ -156,7 +156,7 @@ export default async function KlasemenPage({ params }: Props) {
             {standings.map((entry) => (
               <tr
                 key={entry.playerId}
-                className={entry.rank <= 3 ? "bg-yellow-50" : "hover:bg-gray-50"}
+                className={entry.rank <= 3 ? "bg-yellow-50 dark:bg-yellow-900/30" : "hover:bg-gray-50 dark:hover:bg-gray-800"}
               >
                 <td className="text-center px-3 py-3 font-bold">
                   {entry.rank}

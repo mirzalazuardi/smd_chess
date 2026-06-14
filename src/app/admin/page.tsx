@@ -189,7 +189,7 @@ export default async function AdminDashboard() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {recentTournaments.map((t) => (
-                  <tr key={t.code} className="hover:bg-gray-50">
+                  <tr key={t.code} className="hover:bg-gray-50 dark:hover:bg-gray-800">
                     <td className="px-4 py-3 font-mono text-xs">{t.code}</td>
                     <td className="px-4 py-3">{t.name}</td>
                     <td className="px-4 py-3">{t.rounds_count}</td>

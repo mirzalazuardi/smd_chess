@@ -52,7 +52,7 @@ export default async function SuksesPage({ searchParams }: Props) {
           </Link>
           <Link
             href="/jadwal"
-            className="rounded-lg border border-gray-300 px-4 py-3 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+            className="rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-3 text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >
             Lihat Jadwal
           </Link>
