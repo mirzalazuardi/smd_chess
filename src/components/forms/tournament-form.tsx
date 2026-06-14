@@ -93,7 +93,7 @@ export function TournamentForm({ initial, mode, tournamentId }: Props) {
           required
           defaultValue={initial?.code ?? ""}
           pattern="^[a-z0-9_]+$"
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm font-mono focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm font-mono bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           placeholder="sumedang_open_2026"
         />
         <p className="mt-1 text-xs text-gray-400">
@@ -115,7 +115,7 @@ export function TournamentForm({ initial, mode, tournamentId }: Props) {
           required
           defaultValue={initial?.name ?? ""}
           maxLength={255}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           placeholder="Sumedang Open 2026"
         />
       </div>
@@ -133,7 +133,7 @@ export function TournamentForm({ initial, mode, tournamentId }: Props) {
           defaultValue={initial?.description ?? ""}
           maxLength={1000}
           rows={3}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           placeholder="Informasi tambahan tentang turnamen..."
         />
       </div>
@@ -153,7 +153,7 @@ export function TournamentForm({ initial, mode, tournamentId }: Props) {
           defaultValue={initial?.rounds_count ?? 5}
           min={1}
           max={20}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
         />
       </div>
 
@@ -169,8 +169,7 @@ export function TournamentForm({ initial, mode, tournamentId }: Props) {
             id="status"
             name="status"
             defaultValue={initial?.status ?? "draft"}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-          >
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
             <option value="draft">Draft</option>
             <option value="open">Pendaftaran Buka</option>
             <option value="ongoing">Sedang Berlangsung</option>

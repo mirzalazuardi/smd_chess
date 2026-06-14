@@ -1,0 +1,1 @@
+ALTER TABLE registrations ALTER COLUMN email DROP NOT NULL;

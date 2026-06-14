@@ -97,8 +97,7 @@ export function RegistrationForm({ tournaments }: Props) {
             id="tournament_code"
             name="tournament_code"
             required
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-          >
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
             <option value="">Pilih turnamen</option>
             {tournaments.map((t) => (
               <option key={t.code} value={t.code}>
@@ -125,22 +124,21 @@ export function RegistrationForm({ tournaments }: Props) {
           type="text"
           required
           maxLength={100}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-          placeholder="Contoh: Budi Santoso"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            placeholder="Contoh: Budi Santoso"
         />
       </div>
 
 
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-          Email
+          Email <span className="text-gray-400">(opsional)</span>
         </label>
         <input
           id="email"
           name="email"
           type="email"
-          required
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           placeholder="contoh@email.com"
         />
       </div>
@@ -188,7 +186,7 @@ export function RegistrationForm({ tournaments }: Props) {
             type="text"
             required
             maxLength={100}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             placeholder="Contoh: SMA Negeri 1 Sumedang"
           />
         </div>
@@ -206,8 +204,8 @@ export function RegistrationForm({ tournaments }: Props) {
           required
           minLength={10}
           maxLength={15}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-          placeholder="081234567890"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            placeholder="081234567890"
         />
       </div>
 
@@ -222,8 +220,8 @@ export function RegistrationForm({ tournaments }: Props) {
           type="number"
           min={0}
           max={3000}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-          placeholder="Contoh: 1500"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            placeholder="Contoh: 1500"
         />
       </div>
 
@@ -240,7 +238,7 @@ export function RegistrationForm({ tournaments }: Props) {
           accept="image/*"
           required
           onChange={handleFileChange}
-          className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+          className="w-full text-sm bg-white text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
         />
         {fileName && (
           <p className="mt-1 text-xs text-green-600">{fileName}</p>

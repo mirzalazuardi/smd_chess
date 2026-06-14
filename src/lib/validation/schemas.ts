@@ -9,7 +9,7 @@ export const tournamentCodeSchema = z
 export const registrationSchema = z
   .object({
     full_name: z.string().min(1, "Nama lengkap wajib diisi").max(100),
-    email: z.string().email("Format email tidak valid"),
+    email: z.string().email("Format email tidak valid").optional().or(z.literal("")),
     student_status: z.enum(["pelajar", "umum"], {
       errorMap: () => ({ message: "Status harus pelajar atau umum" }),
     }),

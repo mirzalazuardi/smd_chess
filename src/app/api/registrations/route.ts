@@ -34,7 +34,7 @@ export async function POST(request: Request) {
 
     const rawData = {
       full_name: formData.get("full_name"),
-      email: formData.get("email"),
+      email: formData.get("email") || undefined,
       student_status: formData.get("student_status"),
       school_name: formData.get("school_name") || undefined,
       wa_number: formData.get("wa_number"),

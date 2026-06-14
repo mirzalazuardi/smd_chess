@@ -34,7 +34,7 @@ export function LoginForm() {
           name="email"
           type="email"
           required
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           placeholder="admin@percasisumedang.id"
         />
       </div>
@@ -51,7 +51,7 @@ export function LoginForm() {
           name="password"
           type="password"
           required
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           placeholder="••••••••"
         />
       </div>
