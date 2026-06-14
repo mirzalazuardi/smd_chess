@@ -1,47 +1,39 @@
-# Dependencies
-node_modules/
+
+.claude/
+.codegraph/
+.DS_Store
+.env
+.env.development.local
+.env.local
+.env.production.local
+.env.test.local
+.idea/
+.next
+.next/
 .pnp
 .pnp.js
-
+.vercel
+.vscode/
+*.swo
+*.swp
 # Build
-.next/
-out/
-build/
-dist/
-
+# Claude Code
+# CodeGraph
+# Dependencies
 # Environment
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
+# IDE
 # Logs
+# OS
+# Supabase
+# Testing
+# Vercel
+build/
+coverage/
+dist/
+node_modules/
 npm-debug.log*
+out/
+supabase/.temp/
+Thumbs.db
 yarn-debug.log*
 yarn-error.log*
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Testing
-coverage/
-
-# Supabase
-supabase/.temp/
-
-# Vercel
-.vercel
-
-# Claude Code
-.claude/
-
-# CodeGraph
-.codegraph/
