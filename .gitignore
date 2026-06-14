@@ -34,6 +34,8 @@ node_modules/
 npm-debug.log*
 out/
 supabase/.temp/
+test-results/
 Thumbs.db
+tsconfig.tsbuildinfo
 yarn-debug.log*
 yarn-error.log*
