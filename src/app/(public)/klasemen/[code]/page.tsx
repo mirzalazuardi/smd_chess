@@ -36,7 +36,7 @@ export default async function KlasemenPage({ params }: Props) {
         <p className="text-sm text-gray-500 font-mono mb-8">
           {tournament.code}
         </p>
-        <div className="text-center py-12 text-gray-500 bg-gray-50 rounded-lg">
+        <div className="text-center py-12 text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 rounded-lg">
           Belum ada peserta terdaftar.
         </div>
       </main>
@@ -127,7 +127,7 @@ export default async function KlasemenPage({ params }: Props) {
 
       <div className="overflow-x-auto rounded-lg border border-gray-200">
         <table className="w-full text-xs sm:text-sm">
-          <thead className="bg-gray-50">
+          <thead className="bg-gray-50 dark:bg-gray-800">
             <tr>
               <th className="text-center px-2 sm:px-3 py-3 font-medium text-gray-600 w-8 sm:w-10">
                 #

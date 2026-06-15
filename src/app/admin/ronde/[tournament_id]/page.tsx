@@ -105,7 +105,7 @@ export default async function RoundDetailPage({ params }: Props) {
               key={round.id}
               className="rounded-lg border border-gray-200 overflow-hidden"
             >
-              <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b">
+              <div className="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-800 border-b">
                 <h2 className="font-semibold text-gray-900 dark:text-white">
                   Ronde {round.round_number}
                 </h2>
