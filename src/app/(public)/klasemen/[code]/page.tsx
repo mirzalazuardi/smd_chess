@@ -126,28 +126,28 @@ export default async function KlasemenPage({ params }: Props) {
       </div>
 
       <div className="overflow-x-auto rounded-lg border border-gray-200">
-        <table className="w-full min-w-[640px] text-xs sm:text-sm">
+        <table className="min-w-[560px] text-xs sm:text-sm">
           <thead className="bg-gray-50">
             <tr>
-              <th className="text-center px-3 py-3 font-medium text-gray-600 w-12">
+              <th className="text-center px-2 sm:px-3 py-3 font-medium text-gray-600 w-8 sm:w-10 shrink-0">
                 #
               </th>
-              <th className="text-left px-3 py-3 font-medium text-gray-600">
+              <th className="text-left px-2 sm:px-3 py-3 font-medium text-gray-600">
                 Nama
               </th>
-              <th className="text-center px-3 py-3 font-medium text-gray-600">
-                Poin
+              <th className="text-center px-2 sm:px-3 py-3 font-medium text-gray-600 w-10 shrink-0">
+                Ptn
               </th>
-              <th className="text-center px-3 py-3 font-medium text-gray-600">
+              <th className="text-center px-1.5 sm:px-2 py-3 font-medium text-gray-600 w-6 shrink-0">
                 M
               </th>
-              <th className="text-center px-3 py-3 font-medium text-gray-600">
+              <th className="text-center px-1.5 sm:px-2 py-3 font-medium text-gray-600 w-6 shrink-0">
                 S
               </th>
-              <th className="text-center px-3 py-3 font-medium text-gray-600">
+              <th className="text-center px-1.5 sm:px-2 py-3 font-medium text-gray-600 w-6 shrink-0">
                 K
               </th>
-              <th className="text-center px-3 py-3 font-medium text-gray-600">
+              <th className="text-center px-2 sm:px-3 py-3 font-medium text-gray-600 w-10 shrink-0">
                 BH
               </th>
             </tr>
@@ -158,23 +158,25 @@ export default async function KlasemenPage({ params }: Props) {
                 key={entry.playerId}
                 className={entry.rank <= 3 ? "bg-yellow-50 dark:bg-yellow-900/30" : "hover:bg-gray-50 dark:hover:bg-gray-800"}
               >
-                <td className="text-center px-3 py-3 font-bold">
+                <td className="text-center px-2 sm:px-3 py-3 font-bold">
                   {entry.rank}
                 </td>
-                <td className="px-3 py-3 font-medium">{entry.fullName}</td>
-                <td className="text-center px-3 py-3 font-mono font-bold">
+                <td className="px-2 sm:px-3 py-3 font-medium max-w-[160px] truncate">
+                  {entry.fullName}
+                </td>
+                <td className="text-center px-2 sm:px-3 py-3 font-mono font-bold">
                   {entry.score}
                 </td>
-                <td className="text-center px-3 py-3 text-gray-600">
+                <td className="text-center px-1.5 sm:px-2 py-3 text-gray-600">
                   {entry.wins}
                 </td>
-                <td className="text-center px-3 py-3 text-gray-600">
+                <td className="text-center px-1.5 sm:px-2 py-3 text-gray-600">
                   {entry.draws}
                 </td>
-                <td className="text-center px-3 py-3 text-gray-600">
+                <td className="text-center px-1.5 sm:px-2 py-3 text-gray-600">
                   {entry.losses}
                 </td>
-                <td className="text-center px-3 py-3 font-mono text-gray-500">
+                <td className="text-center px-2 sm:px-3 py-3 font-mono text-gray-500">
                   {entry.buchholz}
                 </td>
               </tr>
