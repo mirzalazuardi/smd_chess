@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { AutoRefresh } from "@/components/ui/auto-refresh";
@@ -37,6 +38,12 @@ function columnize<T>(items: T[], cols: number): T[][] {
   return result;
 }
 
+function columnCount(width: number): number {
+  if (width >= 1024) return 3;
+  if (width >= 768) return 2;
+  return 1;
+}
+
 export function TvPairingView({
   tournamentName,
   tournamentCode,
@@ -44,7 +51,16 @@ export function TvPairingView({
   matches,
 }: Props) {
   const router = useRouter();
-  const columns = columnize(matches, 3);
+  const [cols, setCols] = useState(3);
+
+  useEffect(() => {
+    setCols(columnCount(window.innerWidth));
+    const onResize = () => setCols(columnCount(window.innerWidth));
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const columns = columnize(matches, cols);
 
   function navigate(round: number) {
     router.push(`/pairing/${tournamentCode}/${round}`);
@@ -60,7 +76,7 @@ export function TvPairingView({
         <div className="w-10" />
       </header>
 
-      <main className="flex-1 grid grid-cols-3 divide-x divide-gray-200 dark:divide-gray-700 overflow-hidden">
+      <main className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-200 dark:divide-gray-700 overflow-hidden">
         {columns.map((col, colIdx) => (
           <div key={colIdx} className="overflow-hidden p-4">
             {col.map((match) => (

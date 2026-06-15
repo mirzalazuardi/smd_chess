@@ -86,7 +86,7 @@ export default async function PaymentDetailPage({
         </div>
       ) : (
         <div className="overflow-x-auto rounded-lg border border-gray-200">
-          <table className="w-full text-sm">
+          <table className="w-full min-w-[640px] text-xs sm:text-sm">
             <thead className="bg-gray-50">
               <tr>
                 <th className="text-left px-4 py-3 font-medium text-gray-600">

@@ -126,7 +126,7 @@ export default async function KlasemenPage({ params }: Props) {
       </div>
 
       <div className="overflow-x-auto rounded-lg border border-gray-200">
-        <table className="w-full text-sm">
+        <table className="w-full min-w-[640px] text-xs sm:text-sm">
           <thead className="bg-gray-50">
             <tr>
               <th className="text-center px-3 py-3 font-medium text-gray-600 w-12">

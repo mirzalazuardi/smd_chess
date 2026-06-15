@@ -87,13 +87,13 @@ export default async function JadwalPage({ params }: Props) {
                 {round.matches?.map((match) => (
                   <div
                     key={match.id}
-                    className="flex items-center justify-between py-2 text-sm"
+                    className="flex items-center justify-between py-2 text-xs sm:text-sm"
                   >
-                    <span className="font-medium text-right w-[40%]">
+                    <span className="font-medium text-right w-[40%] truncate">
                       {nameMap.get(match.player1_id) ?? match.player1_id.slice(0, 8)}
                     </span>
 
-                    <span className="font-mono text-center w-[20%]">
+                    <span className="font-mono text-center w-[20%] shrink-0">
                       {match.player2_id ? (
                         match.status === "completed"
                           ? `${match.player1_score ?? "-"} - ${match.player2_score ?? "-"}`
@@ -105,7 +105,7 @@ export default async function JadwalPage({ params }: Props) {
                       )}
                     </span>
 
-                    <span className="font-medium w-[40%]">
+                    <span className="font-medium w-[40%] truncate">
                       {match.player2_id
                         ? nameMap.get(match.player2_id) ?? match.player2_id.slice(0, 8)
                         : "-"}
