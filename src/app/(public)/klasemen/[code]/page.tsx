@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/db/server";
 import { calculateStandings } from "@/lib/swiss/standings";
@@ -45,8 +46,12 @@ export default async function KlasemenPage({ params }: Props) {
 
   const { data: rounds } = await supabase
     .from("tournament_rounds")
-    .select("id, matches(*)")
+    .select("id, round_number, matches(*)")
     .eq("tournament_id", tournament.id);
+
+  const latestRound = rounds?.length
+    ? rounds.reduce((max, r) => (r.round_number > max.round_number ? r : max), rounds[0])
+    : null;
 
   interface SupabaseMatch {
     id: string;
@@ -124,6 +129,17 @@ export default async function KlasemenPage({ params }: Props) {
         <p className="text-sm text-gray-500 font-mono">{tournament.code}</p>
         <AutoRefresh intervalSeconds={30} />
       </div>
+
+      {latestRound && (
+        <div className="mb-4">
+          <Link
+            href={`/pairing/${tournament.code}/${latestRound.round_number}`}
+            className="inline-flex items-center gap-1.5 text-sm text-blue-600 dark:text-blue-400 hover:underline"
+          >
+            Lihat Pairing Ronde {latestRound.round_number} &rarr;
+          </Link>
+        </div>
+      )}
 
       <div className="overflow-x-auto rounded-lg border border-gray-200">
         <table className="w-full text-xs sm:text-sm">
