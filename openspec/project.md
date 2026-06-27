@@ -112,6 +112,14 @@ smd_chess/
 
 **Run:** `npm test` (Vitest)
 
+## API Routes
+
+| Method | Route | Description |
+|---|---|---|
+| `POST` | `/api/tournaments/[id]/rounds` | Generate Swiss pairings for next round (admin) |
+| `POST` | `/api/rounds/[id]/results` | Save match results (admin) |
+| `PATCH` | `/api/rounds/[id]/pairings` | Edit pairings manually before results (admin) |
+
 ## Git Conventions
 
 **Branch naming:** `feat/short-description`, `fix/short-description`

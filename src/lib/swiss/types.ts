@@ -30,3 +30,25 @@ export interface StandingsEntry {
   draws: number;
   losses: number;
 }
+
+export type ViolationCode =
+  | "rematch"
+  | "repeat_bye"
+  | "invalid_permutation"
+  | "color_repeat"
+  | "score_gap";
+
+export interface Violation {
+  code: ViolationCode;
+  severity: "error" | "warning";
+  message: string;
+  tableNo: number | null;
+  playerIds: string[];
+}
+
+export interface PairingValidationResult {
+  ok: boolean;
+  errors: Violation[];
+  warnings: Violation[];
+}
+
