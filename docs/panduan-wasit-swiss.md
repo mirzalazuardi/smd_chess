@@ -15,6 +15,7 @@ Dokumentasi teknis algoritma Swiss pairing yang digunakan SMD Chess untuk verifi
 7. [Sistem Tie-Break](#7-sistem-tie-break)
 8. [Checklist Verifikasi Wasit](#8-checklist-verifikasi-wasit)
 9. [Nomor Meja](#9-nomor-meja)
+10. [Menyesuaikan Pairing Manual](#10-menyesuaikan-pairing-manual)
 
 ---
 
@@ -322,6 +323,68 @@ Wasit dapat memverifikasi nomor meja dengan memeriksa:
 
 - **Halaman Admin:** Kolom "Meja" di `/admin/ronde/[tournament_id]` menampilkan nomor meja untuk setiap pertandingan
 - **Halaman Publik (TV):** `/pairing/[code]/[round]` menampilkan layout 3 kolom khusus untuk layar lebar, dengan nomor meja di setiap pasangan
+
+---
+
+## 10. Menyesuaikan Pairing Manual
+
+Wasit dapat mengubah pasangan secara manual **sebelum hasil diinput**. Fitur ini berguna saat ada peserta tidak hadir, permintaan khusus, atau koreksi keseimbangan warna.
+
+### 10.1 Kapan Pairing Bisa Diedit?
+
+Pairing hanya bisa diedit jika:
+- Status ronde **bukan** "completed"
+- Belum ada hasil yang diinput (semua skor masih kosong)
+
+Setelah hasil diinput, pairing **tidak bisa diubah** — wasit harus menghapus hasil terlebih dahulu.
+
+### 10.2 Cara Mengedit Pairing
+
+1. Buka halaman **Admin > Ronde** → pilih turnamen
+2. Cari ronde yang ingin diedit (status "ongoing" atau "pending", belum ada hasil)
+3. Klik tombol **"Atur Pairing"** pada ronde tersebut
+4. Di mode edit, wasit dapat:
+   - **Tukar lawan:** Klik satu pemain (highlight biru), lalu klik pemain lain → posisi bertukar
+   - **Tukar warna:** Klik tombol **↔** di setiap meja untuk menukar putih↔hitam
+   - **Atur bye:** Pilih pemain dari dropdown "Pilih pemain untuk BYE"
+   - **Atur meja:** Klik ▲/▼ untuk memindahkan meja naik/turun
+5. Klik **"Simpan"** untuk menyimpan perubahan
+
+### 10.3 Aturan yang Diberlakukan
+
+**Kebebasan penuh — Ronde 1 (belum ada riwayat):**
+- Wasit bisa mengubah lawan, warna, meja, dan bye secara bebas
+- Hanya permutasi pemain (kumpulan pemain harus sama) yang divalidasi
+
+**Aturan keras (memblokir simpan, ronde 2+):**
+- ❌ **Rematch** — dua pemain yang sudah pernah bertemu tidak boleh dipasangkan lagi
+- ❌ **Bye ganda** — pemain yang sudah pernah bye tidak boleh bye lagi
+- ❌ **Dua bye** — hanya boleh ada satu bye per ronde
+
+**Aturan lunak (peringatan, tetap bisa disimpan):**
+- ⚠️ **Warna berulang** — pemain mendapat warna sama dua ronde berturut-turut
+- ⚠️ **Selisih skor** — selisih skor antar pemain > 1.0 (lintas kelompok skor)
+
+### 10.4 Tombol dan Indikator
+
+| Elemen | Fungsi |
+|--------|--------|
+| **"Atur Pairing"** | Masuk mode edit |
+| **"Simpan"** | Simpan perubahan (dinonaktifkan jika ada error) |
+| **"Batal"** | Keluar mode edit tanpa menyimpan |
+| ▲ ▼ | Pindahkan meja naik/turun |
+| ↔ | Tukar warna putih↔hitam |
+| Badge kuning | Peringatan (warna/skor) — tidak memblokir simpan |
+| Teks merah | Error (rematch/bye) — memblokir simpan |
+
+### 10.5 Checklist Setelah Edit Manual
+
+- [ ] Tidak ada rematch (cek riwayat pertemuan)
+- [ ] Tidak ada pemain yang bye dua kali
+- [ ] Hanya satu bye per ronde
+- [ ] Warna diusahakan bergantian (abaikan jika terpaksa)
+- [ ] Selisih skor diusahakan ≤ 1.0 (abaikan jika terpaksa)
+- [ ] Nomor meja sudah diatur sesuai urutan skor
 
 ---
 
