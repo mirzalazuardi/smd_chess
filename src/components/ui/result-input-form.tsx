@@ -78,9 +78,9 @@ export function ResultInputForm({ roundId, matches }: Props) {
         {activeMatches.map((m) => (
           <div
             key={m.id}
-            className="flex items-center gap-3 p-3 rounded-md bg-gray-50"
+            className="flex items-center gap-3 p-3 rounded-md bg-gray-50 dark:bg-gray-700"
           >
-            <span className="text-sm font-medium min-w-[120px]">
+            <span className="text-sm font-medium min-w-[120px] text-gray-900 dark:text-gray-100">
               {m.white_name ?? m.player1_id.slice(0, 8)}
             </span>
             <select
@@ -99,14 +99,14 @@ export function ResultInputForm({ roundId, matches }: Props) {
                   e.target.value as "1-0" | "0-1" | "0.5-0.5" | "",
                 )
               }
-              className="text-sm border border-gray-300 rounded px-2 py-1"
+              className="text-sm border border-gray-300 dark:border-gray-500 rounded px-2 py-1 bg-white dark:bg-gray-700 dark:text-gray-100"
             >
               <option value="">-- Hasil --</option>
               <option value="1-0">1 - 0</option>
               <option value="0.5-0.5">&frac12; - &frac12;</option>
               <option value="0-1">0 - 1</option>
             </select>
-            <span className="text-sm font-medium min-w-[120px]">
+            <span className="text-sm font-medium min-w-[120px] text-gray-900 dark:text-gray-100">
               {m.black_name ?? (m.player2_id ?? "").slice(0, 8)}
             </span>
           </div>

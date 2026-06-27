@@ -38,7 +38,7 @@ export default async function RoundDetailPage({ params }: Props) {
 
   if (!tournament) {
     return (
-      <div className="max-w-6xl mx-auto px-4 py-8 text-center text-gray-500">
+      <div className="max-w-6xl mx-auto px-4 py-8 text-center text-gray-500 dark:text-gray-400">
         Turnamen tidak ditemukan.
       </div>
     );
@@ -108,7 +108,7 @@ export default async function RoundDetailPage({ params }: Props) {
 
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{tournament.name}</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{tournament.name}</h1>
           <p className="text-sm text-gray-500 mt-1">
             {rounds?.length ?? 0} dari {tournament.rounds_count} ronde
           </p>
@@ -120,7 +120,7 @@ export default async function RoundDetailPage({ params }: Props) {
       </div>
 
       {!rounds || rounds.length === 0 ? (
-        <div className="text-center py-12 text-gray-500 border rounded-lg">
+        <div className="text-center py-12 text-gray-500 dark:text-gray-400 border rounded-lg">
           Belum ada ronde. Klik &ldquo;Generate Pairing&rdquo; untuk memulai.
         </div>
       ) : (
@@ -135,10 +135,10 @@ export default async function RoundDetailPage({ params }: Props) {
             return (
             <div
               key={round.id}
-              className="rounded-lg border border-gray-200 overflow-hidden"
+              className="rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden bg-white dark:bg-gray-800"
             >
-              <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b">
-                <h2 className="font-semibold text-gray-900 dark:text-white">
+              <div className="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-700 border-b dark:border-gray-600">
+                <h2 className="font-semibold text-gray-900 dark:text-gray-100">
                   Ronde {round.round_number}
                 </h2>
                 <span
@@ -181,7 +181,7 @@ export default async function RoundDetailPage({ params }: Props) {
                   </div>
                 )}
 
-                <div className="flex items-center gap-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider border-b mb-2">
+                <div className="flex items-center gap-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider border-b dark:border-gray-600 mb-2">
                   <span className="min-w-[40px] text-center">Meja</span>
                   <span className="min-w-[150px] text-right">Putih</span>
                   <span className="min-w-[60px] text-center">Hasil</span>
@@ -193,29 +193,29 @@ export default async function RoundDetailPage({ params }: Props) {
                     key={match.id}
                     className="flex items-center gap-4 py-2 text-sm"
                   >
-                    <span className="min-w-[40px] text-center font-mono font-bold text-gray-900 dark:text-white">
+                    <span className="min-w-[40px] text-center font-mono font-bold text-gray-900 dark:text-gray-100">
                       {match.table_no ?? "-"}
                     </span>
 
-                    <span className="font-medium min-w-[150px] text-right">
+                    <span className="font-medium min-w-[150px] text-right text-gray-900 dark:text-gray-100">
                       {nameMap.get(match.player1_id) ??
                         match.player1_id.slice(0, 8)}
                     </span>
 
                     {match.player2_id ? (
                       <>
-                        <span className="font-mono text-gray-600 min-w-[60px] text-center">
+                        <span className="font-mono text-gray-600 dark:text-gray-300 min-w-[60px] text-center">
                           {match.status === "completed"
                             ? `${match.player1_score ?? "-"} - ${match.player2_score ?? "-"}`
                             : "vs"}
                         </span>
-                        <span className="font-medium min-w-[150px]">
+                        <span className="font-medium min-w-[150px] text-gray-900 dark:text-gray-100">
                           {nameMap.get(match.player2_id) ??
                             match.player2_id.slice(0, 8)}
                         </span>
                       </>
                     ) : (
-                      <span className="text-gray-400 italic min-w-[60px] text-center">
+                      <span className="text-gray-400 dark:text-gray-500 italic min-w-[60px] text-center">
                         BYE
                       </span>
                     )}
@@ -223,7 +223,7 @@ export default async function RoundDetailPage({ params }: Props) {
                 ))}
 
                 {round.status === "ongoing" && (
-                  <div className="mt-4 pt-4 border-t">
+                  <div className="mt-4 pt-4 border-t dark:border-gray-600">
                     <ResultInputForm
                       roundId={round.id}
                       matches={round.matches?.map((m) => ({

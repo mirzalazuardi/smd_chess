@@ -181,7 +181,7 @@ export function PairingEditor({ roundId, roundNumber, matches, players }: Pairin
       <button
         type="button"
         onClick={() => handlePlayerClick(player.id)}
-        className={`rounded-full border border-gray-300 px-2.5 py-1 text-sm font-medium text-gray-800 hover:bg-gray-100 transition-colors ${selected ? "ring-2 ring-blue-400" : ""} ${className}`}
+        className={`rounded-full border border-gray-300 dark:border-gray-500 px-2.5 py-1 text-sm font-medium text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors ${selected ? "ring-2 ring-blue-400" : ""} ${className}`}
       >
         {player.full_name}
       </button>
@@ -189,10 +189,10 @@ export function PairingEditor({ roundId, roundNumber, matches, players }: Pairin
   }
   if (!editing) {
     return (
-      <div className="rounded-xl border border-gray-200 bg-white p-4 space-y-3">
+      <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 space-y-3">
         <div className="space-y-1">
-          <p className="text-sm font-medium text-gray-900">Pairing Ronde {roundNumber}</p>
-          <p className="text-sm text-gray-500">Atur ulang pasangan, warna, dan bye sebelum disimpan.</p>
+          <p className="text-sm font-medium text-gray-900 dark:text-gray-100">Pairing Ronde {roundNumber}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Atur ulang pasangan, warna, dan bye sebelum disimpan.</p>
         </div>
         <button
           type="button"
@@ -210,17 +210,17 @@ export function PairingEditor({ roundId, roundNumber, matches, players }: Pairin
   const hasBye = Boolean(byeMatch && byePlayer);
   const playerCountOdd = players.length % 2 === 1;
   return (
-    <div className="space-y-4 rounded-xl border border-gray-200 bg-white p-4">
+    <div className="space-y-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1">
-          <p className="text-sm font-medium text-gray-900">Edit Pairing Ronde {roundNumber}</p>
-          <p className="text-sm text-gray-500">Klik pemain untuk pilih, lalu klik pemain lain untuk tukar posisi.</p>
+          <p className="text-sm font-medium text-gray-900 dark:text-gray-100">Edit Pairing Ronde {roundNumber}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Klik pemain untuk pilih, lalu klik pemain lain untuk tukar posisi.</p>
         </div>
         <div className="flex gap-2">
           <button
             type="button"
             onClick={resetEditor}
-            className="rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300 transition-colors"
+            className="rounded-lg bg-gray-200 dark:bg-gray-600 dark:text-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors"
           >
             Batal
           </button>
@@ -236,13 +236,13 @@ export function PairingEditor({ roundId, roundNumber, matches, players }: Pairin
       </div>
       {error && <p className="text-sm text-red-600">{error}</p>}
       {playerCountOdd && hasBye && byePlayer && (
-        <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-3 space-y-3">
+        <div className="rounded-lg border border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 p-3 space-y-3">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-sm font-medium text-gray-700">Slot BYE:</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Slot BYE:</span>
             {renderPlayerChip(byePlayer)}
-            <span className="rounded bg-gray-200 px-2 py-1 text-xs font-semibold text-gray-700">BYE</span>
+            <span className="rounded bg-gray-200 dark:bg-gray-600 px-2 py-1 text-xs font-semibold text-gray-700 dark:text-gray-200">BYE</span>
           </div>
-          <label className="flex flex-col gap-1 text-sm text-gray-700">
+          <label className="flex flex-col gap-1 text-sm text-gray-700 dark:text-gray-200">
             <span>Pilih pemain untuk BYE</span>
             <select
               value={byePlayer.id}
@@ -252,7 +252,7 @@ export function PairingEditor({ roundId, roundNumber, matches, players }: Pairin
                   swapPlayers(byePlayer.id, nextPlayerId);
                 }
               }}
-              className="rounded-lg border border-gray-300 px-3 py-2 text-sm"
+              className="rounded-lg border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm bg-white dark:bg-gray-700 dark:text-gray-100"
             >
               {players.map((player) => (
                 <option key={player.id} value={player.id}>
@@ -281,9 +281,9 @@ export function PairingEditor({ roundId, roundNumber, matches, players }: Pairin
             const black = match.player2_id ? playerMap.get(match.player2_id)! : null;
             const rowWarnings = warningsByTable.map.get(tableNo) ?? [];
             return (
-              <div key={`${tableNo}-${match.player1_id}-${match.player2_id ?? "bye"}`} className="rounded-lg border border-gray-200 p-3">
+              <div key={`${tableNo}-${match.player1_id}-${match.player2_id ?? "bye"}`} className="rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 p-3">
                 <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-center gap-2 text-sm font-medium text-gray-900">
+                  <div className="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                     <span>Meja {tableNo}</span>
                     {rowWarnings.length > 0 && (
                       <div className="flex flex-wrap gap-2">
@@ -300,7 +300,7 @@ export function PairingEditor({ roundId, roundNumber, matches, players }: Pairin
                       type="button"
                       onClick={() => moveTable(tableNo, -1)}
                       disabled={tableNo === 1}
-                      className="rounded border border-gray-300 px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 disabled:opacity-50 transition-colors"
+                      className="rounded border border-gray-300 dark:border-gray-500 px-2 py-1 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-50 transition-colors"
                     >
                       ▲
                     </button>
@@ -308,7 +308,7 @@ export function PairingEditor({ roundId, roundNumber, matches, players }: Pairin
                       type="button"
                       onClick={() => moveTable(tableNo, 1)}
                       disabled={orderedMatches.filter((entry) => entry.table_no !== null).every((entry) => entry.table_no !== tableNo + 1)}
-                      className="rounded border border-gray-300 px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 disabled:opacity-50 transition-colors"
+                      className="rounded border border-gray-300 dark:border-gray-500 px-2 py-1 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-50 transition-colors"
                     >
                       ▼
                     </button>
@@ -325,7 +325,7 @@ export function PairingEditor({ roundId, roundNumber, matches, players }: Pairin
                           return next;
                         });
                       }}
-                      className="rounded border border-gray-300 px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                      className="rounded border border-gray-300 dark:border-gray-500 px-2 py-1 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
                     >
                       ↔
                     </button>
@@ -333,11 +333,11 @@ export function PairingEditor({ roundId, roundNumber, matches, players }: Pairin
                 </div>
                 <div className="mt-3 flex flex-wrap items-center gap-2">
                   {renderPlayerChip(white)}
-                  <span className="text-sm text-gray-500">vs</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400">vs</span>
                   {black ? (
                     renderPlayerChip(black)
                   ) : (
-                    <span className="rounded-full border border-gray-300 bg-gray-100 px-2.5 py-1 text-sm font-medium text-gray-600">BYE</span>
+                    <span className="rounded-full border border-gray-300 dark:border-gray-500 bg-gray-100 dark:bg-gray-600 px-2.5 py-1 text-sm font-medium text-gray-600 dark:text-gray-300">BYE</span>
                   )}
                 </div>
               </div>
