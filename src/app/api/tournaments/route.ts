@@ -7,7 +7,7 @@ import { tournamentCodeSchema } from "@/lib/validation/schemas";
 const createSchema = z.object({
   code: tournamentCodeSchema,
   name: z.string().min(1, "Nama turnamen wajib diisi").max(255),
-  description: z.string().max(1000).optional(),
+  description: z.string().max(1000).nullable().optional(),
   rounds_count: z
     .number()
     .int("Jumlah ronde harus bilangan bulat")
@@ -15,8 +15,6 @@ const createSchema = z.object({
     .max(20, "Maksimal 20 ronde"),
   status: z.enum(["draft", "open"]).optional(),
 });
-
-const updateSchema = createSchema.partial();
 
 export async function GET() {
   const supabase = await createServiceClient();
