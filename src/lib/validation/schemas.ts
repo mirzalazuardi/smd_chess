@@ -1,5 +1,24 @@
 import { z } from "zod";
 
+const fullNameRule = z.string().min(1, "Nama lengkap wajib diisi").max(100);
+const emailRule = z
+  .string()
+  .email("Format email tidak valid")
+  .optional()
+  .or(z.literal("").transform(() => undefined));
+const studentStatusRule = z.enum(["pelajar", "umum"], {
+  errorMap: () => ({ message: "Status harus pelajar atau umum" }),
+});
+const schoolNameRule = z.string().max(100).optional();
+const waNumberRule = z
+  .string()
+  .regex(/^[0-9]+$/, "Nomor WA hanya boleh berisi angka")
+  .min(10, "Nomor WA minimal 10 digit")
+  .max(15, "Nomor WA maksimal 15 digit");
+const waNumberOptionalRule = waNumberRule
+  .optional()
+  .or(z.literal("").transform(() => undefined));
+
 export const tournamentCodeSchema = z
   .string()
   .min(3, "Kode turnamen minimal 3 karakter")
@@ -8,17 +27,11 @@ export const tournamentCodeSchema = z
 
 export const registrationSchema = z
   .object({
-    full_name: z.string().min(1, "Nama lengkap wajib diisi").max(100),
-    email: z.string().email("Format email tidak valid").optional().or(z.literal("")),
-    student_status: z.enum(["pelajar", "umum"], {
-      errorMap: () => ({ message: "Status harus pelajar atau umum" }),
-    }),
-    school_name: z.string().max(100).optional(),
-    wa_number: z
-      .string()
-      .regex(/^[0-9]+$/, "Nomor WA hanya boleh berisi angka")
-      .min(10, "Nomor WA minimal 10 digit")
-      .max(15, "Nomor WA maksimal 15 digit"),
+    full_name: fullNameRule,
+    email: emailRule,
+    student_status: studentStatusRule,
+    school_name: schoolNameRule,
+    wa_number: waNumberRule,
     tournament_code: tournamentCodeSchema,
     chess_rating: z
       .number()
@@ -41,3 +54,27 @@ export const registrationSchema = z
   );
 
 export type RegistrationInput = z.infer<typeof registrationSchema>;
+
+export const importRowSchema = z
+  .object({
+    full_name: fullNameRule,
+    student_status: studentStatusRule,
+    school_name: schoolNameRule,
+    wa_number: waNumberOptionalRule,
+    email: emailRule,
+    paid: z.boolean(),
+  })
+  .refine(
+    (data) => {
+      if (data.student_status === "pelajar") {
+        return !!data.school_name;
+      }
+      return true;
+    },
+    {
+      message: "Nama sekolah wajib diisi untuk pelajar",
+      path: ["school_name"],
+    },
+  );
+
+export type ImportRowInput = z.infer<typeof importRowSchema>;
