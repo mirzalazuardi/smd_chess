@@ -78,7 +78,7 @@ export function ResultInputForm({ roundId, matches }: Props) {
         {activeMatches.map((m) => (
           <div
             key={m.id}
-            className="flex items-center gap-3 p-3 rounded-md bg-gray-50"
+            className="flex items-center gap-3 p-3 rounded-md bg-gray-50 dark:bg-gray-800"
           >
             <span className="text-sm font-medium min-w-[120px]">
               {m.white_name ?? m.player1_id.slice(0, 8)}

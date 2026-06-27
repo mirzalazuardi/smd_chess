@@ -105,7 +105,7 @@ export default async function RoundDetailPage({ params }: Props) {
               key={round.id}
               className="rounded-lg border border-gray-200 overflow-hidden"
             >
-              <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b">
+              <div className="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-800 border-b">
                 <h2 className="font-semibold text-gray-900 dark:text-white">
                   Ronde {round.round_number}
                 </h2>
@@ -127,41 +127,41 @@ export default async function RoundDetailPage({ params }: Props) {
               </div>
 
               <div className="p-4">
-                <div className="flex items-center gap-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider border-b mb-2">
-                  <span className="min-w-[40px] text-center">Meja</span>
-                  <span className="min-w-[150px] text-right">Putih</span>
-                  <span className="min-w-[60px] text-center">Hasil</span>
-                  <span className="min-w-[150px]">Hitam</span>
+                <div className="flex items-center gap-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider border-b mb-2 overflow-x-auto">
+                  <span className="min-w-[40px] text-center shrink-0">Meja</span>
+                  <span className="min-w-0 flex-1 text-right truncate">Putih</span>
+                  <span className="min-w-[60px] text-center shrink-0">Hasil</span>
+                  <span className="min-w-0 flex-1 truncate">Hitam</span>
                 </div>
 
                 {round.matches?.map((match) => (
                   <div
                     key={match.id}
-                    className="flex items-center gap-4 py-2 text-sm"
+                    className="flex items-center gap-4 py-2 text-xs sm:text-sm"
                   >
-                    <span className="min-w-[40px] text-center font-mono font-bold text-gray-900 dark:text-white">
+                    <span className="min-w-[40px] text-center font-mono font-bold text-gray-900 dark:text-white shrink-0">
                       {match.table_no ?? "-"}
                     </span>
 
-                    <span className="font-medium min-w-[150px] text-right">
+                    <span className="font-medium min-w-0 flex-1 text-right truncate">
                       {nameMap.get(match.player1_id) ??
                         match.player1_id.slice(0, 8)}
                     </span>
 
                     {match.player2_id ? (
                       <>
-                        <span className="font-mono text-gray-600 min-w-[60px] text-center">
+                        <span className="font-mono text-gray-600 min-w-[60px] text-center shrink-0">
                           {match.status === "completed"
                             ? `${match.player1_score ?? "-"} - ${match.player2_score ?? "-"}`
                             : "vs"}
                         </span>
-                        <span className="font-medium min-w-[150px]">
+                        <span className="font-medium min-w-0 flex-1 truncate">
                           {nameMap.get(match.player2_id) ??
                             match.player2_id.slice(0, 8)}
                         </span>
                       </>
                     ) : (
-                      <span className="text-gray-400 italic min-w-[60px] text-center">
+                      <span className="text-gray-400 italic min-w-[60px] text-center shrink-0">
                         BYE
                       </span>
                     )}

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Header } from "@/components/ui/header";
 import { Footer } from "@/components/ui/footer";
 import "./globals.css";
@@ -7,6 +7,14 @@ export const metadata: Metadata = {
   title: "SMD Chess — Percasi Sumedang",
   description:
     "Sistem manajemen turnamen catur — registrasi online, verifikasi pembayaran, dan Swiss pairing.",
+  manifest: "/manifest.json",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#1d4ed8",
 };
 
 export default function RootLayout({
