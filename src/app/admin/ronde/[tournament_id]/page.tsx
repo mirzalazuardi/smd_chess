@@ -4,6 +4,7 @@ import { GeneratePairingsButton } from "@/components/ui/generate-pairings-button
 import { ResultInputForm } from "@/components/ui/result-input-form";
 import { PairingEditor } from "@/components/ui/pairing-editor";
 import { buildPlayerHistory } from "@/lib/swiss/history";
+import { roundHasResults } from "@/lib/swiss/round";
 
 interface MatchRow {
   id: string;
@@ -126,9 +127,7 @@ export default async function RoundDetailPage({ params }: Props) {
       ) : (
         <div className="space-y-6">
           {rounds.map((round) => {
-            const hasResults = round.matches?.some(
-              (m) => m.player1_score !== null,
-            );
+            const hasResults = roundHasResults(round.matches);
             const isEditable =
               round.status !== "completed" && !hasResults;
 

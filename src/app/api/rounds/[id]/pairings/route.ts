@@ -4,6 +4,7 @@ import { createServiceClient } from "@/lib/db/server";
 import { requireAdmin } from "@/lib/auth/guard";
 import { buildPlayerHistory } from "@/lib/swiss/history";
 import { validatePairings } from "@/lib/swiss/validation";
+import { roundHasResults } from "@/lib/swiss/round";
 import type { Pairing } from "@/lib/swiss/types";
 
 const updatePairingsSchema = z.object({
@@ -44,10 +45,7 @@ export async function PATCH(
       return NextResponse.json({ error: "Ronde tidak ditemukan" }, { status: 404 });
     }
 
-    if (
-      round.status === "completed" ||
-      round.matches?.some((match: { player1_score: number | null }) => match.player1_score !== null)
-    ) {
+    if (round.status === "completed" || roundHasResults(round.matches)) {
       return NextResponse.json(
         { error: "Ronde sudah punya hasil, tidak bisa diubah" },
         { status: 409 },
