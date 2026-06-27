@@ -162,13 +162,13 @@ export default async function AdminDashboard() {
         </div>
 
         {!recentTournaments || recentTournaments.length === 0 ? (
-          <div className="text-center py-8 bg-gray-50 rounded-lg text-sm text-gray-500">
+          <div className="text-center py-8 bg-gray-50 dark:bg-gray-800 rounded-lg text-sm text-gray-500 dark:text-gray-400">
             Belum ada turnamen. Klik &ldquo;Buat Turnamen&rdquo; untuk memulai.
           </div>
         ) : (
           <div className="overflow-x-auto rounded-lg border border-gray-200">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-50 dark:bg-gray-800">
                 <tr>
                   <th className="text-left px-4 py-3 font-medium text-gray-600">
                     Kode
