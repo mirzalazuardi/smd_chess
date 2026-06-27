@@ -68,12 +68,12 @@ smd_chess/
 - `registration_id` VARCHAR UNIQUE NOT NULL — `CATUR{YEAR}-{SEQ}`
 - `tournament_id` UUID REFERENCES tournaments
 - `full_name` VARCHAR NOT NULL
-- `email` VARCHAR NOT NULL
+- `email` VARCHAR
 - `student_status` ENUM('pelajar', 'umum') NOT NULL
 - `school_name` VARCHAR — required if pelajar
-- `wa_number` VARCHAR NOT NULL
+- `wa_number` VARCHAR
 - `chess_rating` INT — optional
-- `proof_transfer_url` VARCHAR NOT NULL
+- `proof_transfer_url` VARCHAR
 - `paid` BOOLEAN NOT NULL DEFAULT FALSE
 - `payment_verified_at` TIMESTAMP
 - `payment_verified_by` UUID — admin user ID
