@@ -118,6 +118,7 @@ smd_chess/
 |---|---|---|
 | `POST` | `/api/tournaments/[id]/rounds` | Generate Swiss pairings for next round (admin) |
 | `POST` | `/api/rounds/[id]/results` | Save match results (admin) |
+| `POST` | `/api/tournaments/[id]/import` | Import peserta via CSV (admin) |
 | `PATCH` | `/api/rounds/[id]/pairings` | Edit pairings manually before results (admin) |
 
 ## Git Conventions
