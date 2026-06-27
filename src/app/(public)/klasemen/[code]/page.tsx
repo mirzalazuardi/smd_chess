@@ -4,6 +4,7 @@ import { createClient } from "@/lib/db/server";
 import { calculateStandings } from "@/lib/swiss/standings";
 import type { Player } from "@/lib/swiss/types";
 import { AutoRefresh } from "@/components/ui/auto-refresh";
+import { StandingsTable } from "@/components/ui/standings-table";
 
 interface Props {
   params: Promise<{ code: string }>;
@@ -141,65 +142,7 @@ export default async function KlasemenPage({ params }: Props) {
         </div>
       )}
 
-      <div className="overflow-x-auto rounded-lg border border-gray-200">
-        <table className="w-full text-xs sm:text-sm">
-          <thead className="bg-gray-50 dark:bg-gray-800">
-            <tr>
-              <th className="text-center px-2 sm:px-3 py-3 font-medium text-gray-600 w-8 sm:w-10">
-                #
-              </th>
-              <th className="text-left px-2 sm:px-3 py-3 font-medium text-gray-600">
-                Nama
-              </th>
-              <th className="text-center px-2 sm:px-3 py-3 font-medium text-gray-600">
-                Poin
-              </th>
-              <th className="text-center px-2 py-3 font-medium text-gray-600 hidden sm:table-cell">
-                M
-              </th>
-              <th className="text-center px-2 py-3 font-medium text-gray-600 hidden sm:table-cell">
-                S
-              </th>
-              <th className="text-center px-2 py-3 font-medium text-gray-600 hidden sm:table-cell">
-                K
-              </th>
-              <th className="text-center px-2 sm:px-3 py-3 font-medium text-gray-600 hidden sm:table-cell">
-                BH
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100">
-            {standings.map((entry) => (
-              <tr
-                key={entry.playerId}
-                className={entry.rank <= 3 ? "bg-yellow-50 dark:bg-yellow-900/30" : "hover:bg-gray-50 dark:hover:bg-gray-800"}
-              >
-                <td className="text-center px-2 sm:px-3 py-3 font-bold">
-                  {entry.rank}
-                </td>
-                <td className="px-2 sm:px-3 py-3 font-medium truncate max-w-[200px]">
-                  {entry.fullName}
-                </td>
-                <td className="text-center px-2 sm:px-3 py-3 font-mono font-bold">
-                  {entry.score}
-                </td>
-                <td className="text-center px-2 py-3 text-gray-600 hidden sm:table-cell">
-                  {entry.wins}
-                </td>
-                <td className="text-center px-2 py-3 text-gray-600 hidden sm:table-cell">
-                  {entry.draws}
-                </td>
-                <td className="text-center px-2 py-3 text-gray-600 hidden sm:table-cell">
-                  {entry.losses}
-                </td>
-                <td className="text-center px-2 sm:px-3 py-3 font-mono text-gray-500 hidden sm:table-cell">
-                  {entry.buchholz}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <StandingsTable standings={standings} />
     </main>
   );
 }
