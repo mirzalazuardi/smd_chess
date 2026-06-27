@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createServiceClient } from "@/lib/db/server";
 import { TournamentForm } from "@/components/forms/tournament-form";
@@ -25,6 +26,14 @@ export default async function EditTournamentPage({ params }: Props) {
       <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
         Edit Turnamen
       </h1>
+      <div className="mb-6">
+        <Link
+          href={`/admin/turnamen/${tournament.id}/import`}
+          className="inline-flex items-center gap-1.5 text-sm text-blue-600 dark:text-blue-400 hover:underline"
+        >
+          Import Peserta (CSV) &rarr;
+        </Link>
+      </div>
       <TournamentForm
         mode="edit"
         tournamentId={tournament.id}

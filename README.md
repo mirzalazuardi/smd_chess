@@ -93,6 +93,7 @@ npm test
 | `/admin/turnamen` | Tournament list |
 | `/admin/turnamen/baru` | Create tournament |
 | `/admin/turnamen/[id]/edit` | Edit tournament |
+| `/admin/turnamen/[id]/import` | Import peserta via CSV |
 | `/admin/ronde` | Round list — pick tournament |
 | `/admin/ronde/[tournament_id]` | Manage round: generate pairings, input results |
 | `/admin/pembayaran` | Payment verification — pick tournament |
@@ -109,6 +110,7 @@ npm test
 | `GET` | `/api/tournaments/[id]` | Get tournament details |
 | `PUT` | `/api/tournaments/[id]` | Update tournament (admin) |
 | `DELETE` | `/api/tournaments/[id]` | Delete tournament (admin) |
+| `POST` | `/api/tournaments/[id]/import` | Import peserta via CSV (admin) |
 | `GET` | `/api/tournaments/[id]/rounds` | List rounds for a tournament |
 | `POST` | `/api/tournaments/[id]/rounds` | Generate Swiss pairings for next round (admin) |
 | `POST` | `/api/rounds/[id]/results` | Save match results (admin) |
