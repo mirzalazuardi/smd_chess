@@ -2,6 +2,8 @@ import Link from "next/link";
 import { createServiceClient } from "@/lib/db/server";
 import { GeneratePairingsButton } from "@/components/ui/generate-pairings-button";
 import { ResultInputForm } from "@/components/ui/result-input-form";
+import { PairingEditor } from "@/components/ui/pairing-editor";
+import { buildPlayerHistory } from "@/lib/swiss/history";
 
 interface MatchRow {
   id: string;
@@ -61,12 +63,35 @@ export default async function RoundDetailPage({ params }: Props) {
 
   const { data: registrations } = await supabase
     .from("registrations")
-    .select("id, full_name")
+    .select("id, full_name, chess_rating")
     .eq("tournament_id", tournament_id)
     .eq("paid", true)
     .eq("is_active", true);
 
   const nameMap = new Map(registrations?.map((r) => [r.id, r.full_name]) ?? []);
+
+  function computePlayers(forRoundNumber: number) {
+    const priorRounds = rounds.filter((r) => r.round_number < forRoundNumber);
+    return Array.from(
+      buildPlayerHistory(
+        (registrations ?? []).map((r) => ({
+          id: r.id,
+          full_name: r.full_name,
+          chess_rating: r.chess_rating ?? null,
+        })),
+        priorRounds.map((r) => ({
+          id: r.id,
+          round_number: r.round_number,
+          matches: (r.matches ?? []).map((m) => ({
+            player1_id: m.player1_id,
+            player2_id: m.player2_id,
+            player1_score: m.player1_score,
+            player2_score: m.player2_score,
+          })),
+        })),
+      ).values(),
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -100,7 +125,14 @@ export default async function RoundDetailPage({ params }: Props) {
         </div>
       ) : (
         <div className="space-y-6">
-          {rounds.map((round) => (
+          {rounds.map((round) => {
+            const hasResults = round.matches?.some(
+              (m) => m.player1_score !== null,
+            );
+            const isEditable =
+              round.status !== "completed" && !hasResults;
+
+            return (
             <div
               key={round.id}
               className="rounded-lg border border-gray-200 overflow-hidden"
@@ -127,6 +159,28 @@ export default async function RoundDetailPage({ params }: Props) {
               </div>
 
               <div className="p-4">
+                {isEditable && (
+                  <div className="mb-4">
+                    <PairingEditor
+                      roundId={round.id}
+                      roundNumber={round.round_number}
+                      matches={
+                        round.matches?.map((m) => ({
+                          ...m,
+                          white_name:
+                            nameMap.get(m.player1_id) ??
+                            m.player1_id.slice(0, 8),
+                          black_name: m.player2_id
+                            ? nameMap.get(m.player2_id) ??
+                              m.player2_id.slice(0, 8)
+                            : null,
+                        })) ?? []
+                      }
+                      players={computePlayers(round.round_number)}
+                    />
+                  </div>
+                )}
+
                 <div className="flex items-center gap-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider border-b mb-2">
                   <span className="min-w-[40px] text-center">Meja</span>
                   <span className="min-w-[150px] text-right">Putih</span>
@@ -184,7 +238,8 @@ export default async function RoundDetailPage({ params }: Props) {
                 )}
               </div>
             </div>
-          ))}
+          );
+          })}
         </div>
       )}
     </div>
