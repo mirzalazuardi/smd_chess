@@ -33,7 +33,7 @@ export function TournamentForm({ initial, mode, tournamentId }: Props) {
     const body: Record<string, unknown> = {
       code: formData.get("code"),
       name: formData.get("name"),
-      description: formData.get("description") || null,
+      description: formData.get("description") || undefined,
       rounds_count: Number(formData.get("rounds_count")),
     };
 
