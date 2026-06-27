@@ -32,7 +32,7 @@ export function ProofViewer({ url, name }: Props) {
               <p className="text-sm font-medium truncate">{name}</p>
               <button
                 onClick={() => setOpen(false)}
-                className="text-gray-400 hover:text-gray-600 text-lg leading-none"
+                className="text-gray-500 hover:text-gray-700 text-lg leading-none"
               >
                 &times;
               </button>

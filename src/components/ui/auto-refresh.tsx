@@ -31,7 +31,7 @@ export function AutoRefresh({ intervalSeconds = 30 }: { intervalSeconds?: number
   return (
     <button
       onClick={handleRefresh}
-      className="text-xs text-gray-400 hover:text-blue-600 transition-colors"
+      className="text-xs text-gray-500 hover:text-blue-600 transition-colors"
     >
       Refresh ({countdown}s)
     </button>

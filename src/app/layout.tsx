@@ -8,6 +8,11 @@ export const metadata: Metadata = {
   description:
     "Sistem manajemen turnamen catur — registrasi online, verifikasi pembayaran, dan Swiss pairing.",
   manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "SMD Chess",
+  },
 };
 
 export const viewport: Viewport = {
@@ -25,6 +30,8 @@ export default function RootLayout({
   return (
     <html lang="id" className="h-full antialiased" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://supabase.co" />
+        <link rel="dns-prefetch" href="https://supabase.co" />
         <script
           dangerouslySetInnerHTML={{
             __html: `

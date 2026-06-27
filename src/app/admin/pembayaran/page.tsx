@@ -26,7 +26,7 @@ export default async function PaymentListPage() {
               href={`/admin/pembayaran/${t.id}`}
               className="rounded-lg border border-gray-200 p-4 hover:border-blue-300 hover:shadow-sm transition-all"
             >
-              <p className="font-mono text-xs text-gray-400 mb-1">{t.code}</p>
+              <p className="font-mono text-xs text-gray-500 mb-1">{t.code}</p>
               <p className="font-medium text-gray-900 dark:text-white">{t.name}</p>
               <p className="text-xs text-gray-500 mt-2 capitalize">
                 {t.status === "open"

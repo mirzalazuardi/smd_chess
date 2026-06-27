@@ -103,7 +103,7 @@ export default async function RoundDetailPage({ params }: Props) {
         >
           &larr; Kembali
         </Link>
-        <span className="text-gray-300">|</span>
+        <span className="text-gray-500">|</span>
         <p className="text-sm text-gray-500 font-mono">{tournament.code}</p>
       </div>
 
@@ -214,7 +214,7 @@ export default async function RoundDetailPage({ params }: Props) {
                         </span>
                       </>
                     ) : (
-                      <span className="text-gray-400 dark:text-gray-500 italic min-w-[60px] text-center">
+                      <span className="text-gray-500 dark:text-gray-400 italic min-w-[60px] text-center">
                         BYE
                       </span>
                     )}

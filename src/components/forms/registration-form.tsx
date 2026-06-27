@@ -132,7 +132,7 @@ export function RegistrationForm({ tournaments }: Props) {
 
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-          Email <span className="text-gray-400">(opsional)</span>
+          Email <span className="text-gray-500">(opsional)</span>
         </label>
         <input
           id="email"
@@ -212,7 +212,7 @@ export function RegistrationForm({ tournaments }: Props) {
 
       <div>
         <label htmlFor="chess_rating" className="block text-sm font-medium text-gray-700 mb-1">
-          Rating Catur <span className="text-gray-400">(opsional)</span>
+          Rating Catur <span className="text-gray-500">(opsional)</span>
         </label>
         <input
           id="chess_rating"

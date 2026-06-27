@@ -46,13 +46,13 @@ export default async function SuksesPage({ searchParams }: Props) {
         <div className="flex flex-col gap-3 pt-4">
           <Link
             href="/"
-            className="rounded-lg bg-blue-600 px-4 py-3 text-white font-medium hover:bg-blue-700 transition-colors"
+            className="rounded-lg bg-blue-600 px-4 py-3 text-white font-medium hover:bg-blue-700 transition-colors no-underline"
           >
             Kembali ke Beranda
           </Link>
           <Link
             href="/jadwal"
-            className="rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-3 text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            className="rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-3 text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors no-underline"
           >
             Lihat Jadwal
           </Link>

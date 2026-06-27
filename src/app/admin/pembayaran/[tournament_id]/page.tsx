@@ -66,7 +66,7 @@ export default async function PaymentDetailPage({
         >
           &larr; Kembali
         </Link>
-        <span className="text-gray-300">|</span>
+        <span className="text-gray-500">|</span>
         <p className="text-sm text-gray-500 font-mono">{tournament.code}</p>
       </div>
 
@@ -115,7 +115,7 @@ export default async function PaymentDetailPage({
                   <td className="px-4 py-3 font-mono text-xs">{r.registration_id}</td>
                   <td className="px-4 py-3">
                     <p className="font-medium">{r.full_name}</p>
-                    <p className="text-xs text-gray-400">{r.email}</p>
+                    <p className="text-xs text-gray-500">{r.email}</p>
                   </td>
                   <td className="px-4 py-3">
                     <span className="text-xs capitalize">

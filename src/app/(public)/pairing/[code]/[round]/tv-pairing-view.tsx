@@ -94,7 +94,7 @@ export function TvPairingView({
                 </div>
                 {match.player2_id ? (
                   <div className="flex items-baseline gap-2 pl-[2.5rem]">
-                    <span className="text-sm text-gray-400 dark:text-gray-500 min-w-[1.5rem] text-center">
+                    <span className="text-sm text-gray-500 dark:text-gray-400 min-w-[1.5rem] text-center">
                       vs
                     </span>
                     <span className="flex-1 truncate">
@@ -103,7 +103,7 @@ export function TvPairingView({
                   </div>
                 ) : (
                   <div className="pl-[2.5rem]">
-                    <span className="text-xs text-gray-400 dark:text-gray-500 italic">
+                    <span className="text-xs text-gray-500 dark:text-gray-400 italic">
                       BYE
                     </span>
                   </div>

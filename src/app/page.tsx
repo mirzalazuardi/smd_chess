@@ -14,24 +14,24 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
           <Link
             href="/daftar"
-            className="rounded-lg bg-blue-600 px-6 py-3 text-white font-medium hover:bg-blue-700 transition-colors"
+            className="rounded-lg bg-blue-600 px-6 py-3 text-white font-medium hover:bg-blue-700 transition-colors no-underline"
           >
             Daftar Turnamen
           </Link>
           <Link
             href="/jadwal"
-            className="rounded-lg border border-gray-300 dark:border-gray-600 px-6 py-3 text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            className="rounded-lg border border-gray-300 dark:border-gray-600 px-6 py-3 text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors no-underline"
           >
             Lihat Jadwal
           </Link>
           <Link
             href="/klasemen"
-            className="rounded-lg border border-gray-300 dark:border-gray-600 px-6 py-3 text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            className="rounded-lg border border-gray-300 dark:border-gray-600 px-6 py-3 text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors no-underline"
           >
             Klasemen
           </Link>
         </div>
-        <p className="text-sm text-gray-400 pt-8">
+        <p className="text-sm text-gray-500 pt-8">
           Admin?{" "}
           <Link
             href="/admin/login"

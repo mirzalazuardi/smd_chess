@@ -96,7 +96,7 @@ export function TournamentForm({ initial, mode, tournamentId }: Props) {
           className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm font-mono bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           placeholder="sumedang_open_2026"
         />
-        <p className="mt-1 text-xs text-gray-400">
+        <p className="mt-1 text-xs text-gray-500">
           Huruf kecil, angka, dan underscore. Contoh: sumedang_open_2026
         </p>
       </div>
@@ -125,7 +125,7 @@ export function TournamentForm({ initial, mode, tournamentId }: Props) {
           htmlFor="description"
           className="block text-sm font-medium text-gray-700 mb-1"
         >
-          Deskripsi <span className="text-gray-400">(opsional)</span>
+          Deskripsi <span className="text-gray-500">(opsional)</span>
         </label>
         <textarea
           id="description"

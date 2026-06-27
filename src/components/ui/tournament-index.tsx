@@ -66,12 +66,12 @@ export async function TournamentIndex({
             className="rounded-lg border border-gray-200 p-4 hover:border-blue-300 hover:shadow-sm transition-all"
           >
             <h2 className="font-semibold text-gray-900 dark:text-white">{t.name}</h2>
-            <p className="text-xs text-gray-400 font-mono mt-1">{t.code}</p>
+            <p className="text-xs text-gray-500 font-mono mt-1">{t.code}</p>
             <div className="flex items-center gap-2 mt-2">
               <span className={`text-xs px-2 py-0.5 rounded-full ${statusStyles[t.status]}`}>
                 {statusLabels[t.status]}
               </span>
-              <span className="text-xs text-gray-400">
+              <span className="text-xs text-gray-500">
                 {t.rounds_count} ronde
               </span>
             </div>

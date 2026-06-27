@@ -200,7 +200,7 @@ export default async function AdminDashboard() {
                         {statusLabel[t.status] || t.status}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-xs text-gray-400">
+                    <td className="px-4 py-3 text-xs text-gray-500">
                       {new Date(t.created_at).toLocaleDateString("id-ID", {
                         day: "numeric",
                         month: "short",

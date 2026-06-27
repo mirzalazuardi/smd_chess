@@ -2,7 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  a {
+    @apply underline underline-offset-2 decoration-gray-400 hover:decoration-current;
+  }
+
+  /* Navigation links don't need underlines */
+  nav a,
+  header a,
+  [role="tab"] a {
+    @apply no-underline;
+  }
+}
+
 body {
   font-family: system-ui, -apple-system, sans-serif;
   @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100;
 }
+

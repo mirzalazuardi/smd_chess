@@ -99,7 +99,7 @@ export default async function JadwalPage({ params }: Props) {
                           ? `${match.player1_score ?? "-"} - ${match.player2_score ?? "-"}`
                           : "vs"
                       ) : (
-                        <span className="text-gray-400 italic text-xs">
+                        <span className="text-gray-500 italic text-xs">
                           BYE
                         </span>
                       )}
@@ -112,7 +112,7 @@ export default async function JadwalPage({ params }: Props) {
                     </span>
                   </div>
                 )) ?? (
-                  <p className="text-sm text-gray-400">Belum ada pertandingan.</p>
+                  <p className="text-sm text-gray-500">Belum ada pertandingan.</p>
                 )}
               </div>
             </div>

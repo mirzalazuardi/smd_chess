@@ -91,7 +91,7 @@ export default async function AdminLayout({
             </nav>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-xs text-gray-400 hidden sm:inline">
+            <span className="text-xs text-gray-500 hidden sm:inline">
               {user.email}
             </span>
             <LogoutButton />
