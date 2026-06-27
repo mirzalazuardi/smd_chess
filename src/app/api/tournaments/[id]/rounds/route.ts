@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/db/server";
 import { requireAdmin } from "@/lib/auth/guard";
 import { generateSwissPairings } from "@/lib/swiss/pairing";
-import type { Player } from "@/lib/swiss/types";
+import { buildPlayerHistory } from "@/lib/swiss/history";
 
 export async function GET(
   _request: Request,
@@ -77,52 +77,12 @@ export async function POST(
 
   const { data: allMatches } = await supabase
     .from("tournament_rounds")
-    .select("id, matches(*)")
+    .select("id, round_number, matches(*)")
     .eq("tournament_id", tournamentId)
     .order("round_number", { ascending: true });
 
-  const playerScores = new Map<string, number>();
-  const playerOpponents = new Map<string, string[]>();
-  const playerLastColor = new Map<string, "W" | "B" | null>();
-
-  for (const reg of registrations) {
-    playerScores.set(reg.id, 0);
-    playerOpponents.set(reg.id, []);
-    playerLastColor.set(reg.id, null);
-  }
-
-  for (const round of allMatches ?? []) {
-    for (const match of round.matches ?? []) {
-      if (match.player1_score !== null) {
-        playerScores.set(
-          match.player1_id,
-          (playerScores.get(match.player1_id) ?? 0) + (match.player1_score ?? 0),
-        );
-        playerLastColor.set(match.player1_id, "W");
-      }
-      if (match.player2_id && match.player2_score !== null) {
-        playerScores.set(
-          match.player2_id,
-          (playerScores.get(match.player2_id) ?? 0) + (match.player2_score ?? 0),
-        );
-        playerLastColor.set(match.player2_id, "B");
-      }
-      if (match.player2_id) {
-        playerOpponents.get(match.player1_id)?.push(match.player2_id);
-        playerOpponents.get(match.player2_id)?.push(match.player1_id);
-      }
-    }
-  }
-
-  const players: Player[] = registrations.map((r) => ({
-    id: r.id,
-    full_name: r.full_name,
-    chess_rating: r.chess_rating ?? 0,
-    score: playerScores.get(r.id) ?? 0,
-    opponentIds: playerOpponents.get(r.id) ?? [],
-    lastColor: playerLastColor.get(r.id) ?? null,
-    hadBye: false,
-  }));
+  const playerMap = buildPlayerHistory(registrations, allMatches ?? []);
+  const players = Array.from(playerMap.values());
 
   const pairings = generateSwissPairings(players);
 
