@@ -15,3 +15,10 @@ export function roundHasResults(
     ) ?? false
   );
 }
+
+export function hasSubsequentRound(
+  rounds: Array<{ round_number: number }>,
+  currentRoundNumber: number,
+): boolean {
+  return rounds.some((r) => r.round_number > currentRoundNumber);
+}
