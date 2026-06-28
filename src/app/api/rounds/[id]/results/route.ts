@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/db/server";
 import { requireAdmin } from "@/lib/auth/guard";
+import { hasSubsequentRound } from "@/lib/swiss/round";
 
 export async function PATCH(
   request: Request,
@@ -49,15 +50,15 @@ export async function PATCH(
       );
     }
 
-    const { data: nextRound } = await supabase
+    const { data: allRounds } = await supabase
       .from("tournament_rounds")
-      .select("id")
-      .eq("tournament_id", currentRound.tournament_id)
-      .gt("round_number", currentRound.round_number)
-      .limit(1)
-      .single();
+      .select("round_number")
+      .eq("tournament_id", currentRound.tournament_id);
 
-    if (nextRound) {
+    if (
+      allRounds &&
+      hasSubsequentRound(allRounds, currentRound.round_number)
+    ) {
       return NextResponse.json(
         { error: "Ronde berikutnya sudah digenerate, hasil tidak bisa diubah" },
         { status: 409 },
