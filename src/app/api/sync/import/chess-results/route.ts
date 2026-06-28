@@ -42,11 +42,12 @@ export async function POST(request: Request) {
 
   const supabase = await createServiceClient();
 
-  const { data: tournament, error: tournamentError } = await supabase
-    .from("tournaments")
-    .select("id, status")
-    .eq("id", tournamentId)
-    .single();
+  // Try UUID first, then tournament code
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(tournamentId);
+  let query = supabase.from("tournaments").select("id, status");
+  query = isUuid ? query.eq("id", tournamentId) : query.eq("code", tournamentId);
+
+  const { data: tournament, error: tournamentError } = await query.single();
 
   if (tournamentError || !tournament) {
     return NextResponse.json(

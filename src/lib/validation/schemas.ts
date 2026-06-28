@@ -107,13 +107,13 @@ export const chessResultsMetaSchema = z.object({
 });
 
 export const chessResultsUrlSchema = z.string().url().regex(
-  /^https?:\/\/chess-results\.com\/tnr\d+/i,
+  /^https?:\/\/(?:[\w-]+\.)?chess-results\.com\/tnr\d+/i,
   "URL harus dari chess-results.com (format: chess-results.com/tnr...)",
 );
 
 export const importChessResultsSchema = z.object({
   url: chessResultsUrlSchema,
-  tournamentId: z.string().uuid("ID turnamen tidak valid"),
+  tournamentId: z.string().min(1, "ID turnamen wajib diisi"),
 });
 
 export type ChessResultsPlayerInput = z.infer<typeof chessResultsPlayerSchema>;
