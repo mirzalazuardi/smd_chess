@@ -31,6 +31,8 @@ smd_chess/
 │   │   └── layout.tsx
 │   ├── lib/
 │   │   ├── swiss/             # Swiss pairing algorithm
+│   │   ├── sync/              # chess-results.com sync (import/export)
+│   │   ├── import/            # CSV import parsing
 │   │   ├── db/                # Supabase client, queries
 │   │   ├── validation/        # Zod schemas
 │   │   └── utils/             # Helpers
@@ -120,6 +122,10 @@ smd_chess/
 | `POST` | `/api/rounds/[id]/results` | Save match results (admin) |
 | `POST` | `/api/tournaments/[id]/import` | Import peserta via CSV (admin) |
 | `PATCH` | `/api/rounds/[id]/pairings` | Edit pairings manually before results (admin) |
+| `POST` | `/api/sync/import/chess-results` | Import dari chess-results.com (admin) |
+| `GET` | `/api/sync/preview/chess-results` | Preview data chess-results.com (admin) |
+| `GET` | `/api/tournaments/[id]/export/trf` | Export TRF file (admin) |
+| `GET` | `/api/tournaments/[id]/export/csv` | Export CSV player list (admin) |
 
 ## Git Conventions
 

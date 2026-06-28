@@ -94,6 +94,13 @@ export default async function AdminDashboard() {
       icon: "→",
       color: "bg-gray-600 hover:bg-gray-700",
     },
+    {
+      label: "Sinkronisasi",
+      desc: "Import dari chess-results.com",
+      href: "/admin/sync",
+      icon: "⇄",
+      color: "bg-teal-600 hover:bg-teal-700",
+    },
   ];
 
   const statusLabel: Record<string, string> = {

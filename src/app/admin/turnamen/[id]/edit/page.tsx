@@ -33,6 +33,20 @@ export default async function EditTournamentPage({ params }: Props) {
         >
           Import Peserta (CSV) &rarr;
         </Link>
+        <span className="mx-2 text-gray-300">|</span>
+        <Link
+          href={`/api/tournaments/${tournament.id}/export/csv`}
+          className="inline-flex items-center gap-1.5 text-sm text-blue-600 dark:text-blue-400 hover:underline"
+        >
+          Export CSV &rarr;
+        </Link>
+        <span className="mx-2 text-gray-300">|</span>
+        <Link
+          href={`/api/tournaments/${tournament.id}/export/trf`}
+          className="inline-flex items-center gap-1.5 text-sm text-blue-600 dark:text-blue-400 hover:underline"
+        >
+          Export TRF &rarr;
+        </Link>
       </div>
       <TournamentForm
         mode="edit"
