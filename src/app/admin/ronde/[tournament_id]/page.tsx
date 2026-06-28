@@ -5,6 +5,7 @@ import { ResultInputForm } from "@/components/ui/result-input-form";
 import { PairingEditor } from "@/components/ui/pairing-editor";
 import { buildPlayerHistory } from "@/lib/swiss/history";
 import { roundHasResults } from "@/lib/swiss/round";
+import { EditResultsToggle } from "@/components/ui/edit-results-toggle";
 
 interface MatchRow {
   id: string;
@@ -221,7 +222,7 @@ export default async function RoundDetailPage({ params }: Props) {
                   </div>
                 ))}
 
-                {round.status === "ongoing" && (
+                {round.status === "ongoing" ? (
                   <div className="mt-4 pt-4 border-t dark:border-gray-600">
                     <ResultInputForm
                       roundId={round.id}
@@ -234,7 +235,39 @@ export default async function RoundDetailPage({ params }: Props) {
                       })) ?? []}
                     />
                   </div>
-                )}
+                ) : round.status === "completed" &&
+                  round.round_number === rounds.length ? (
+                  <EditResultsToggle
+                    roundId={round.id}
+                    matches={
+                      round.matches?.map((m) => ({
+                        ...m,
+                        white_name:
+                          nameMap.get(m.player1_id) ??
+                          m.player1_id.slice(0, 8),
+                        black_name: m.player2_id
+                          ? nameMap.get(m.player2_id) ??
+                            m.player2_id.slice(0, 8)
+                          : null,
+                      })) ?? []
+                    }
+                    initialResults={(() => {
+                      const init: Record<
+                        string,
+                        { p1: number; p2: number | null }
+                      > = {};
+                      for (const m of round.matches ?? []) {
+                        if (m.player2_id && m.player1_score !== null) {
+                          init[m.id] = {
+                            p1: m.player1_score,
+                            p2: m.player2_score,
+                          };
+                        }
+                      }
+                      return init;
+                    })()}
+                  />
+                ) : null}
               </div>
             </div>
           );
