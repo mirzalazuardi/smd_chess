@@ -35,6 +35,35 @@ export async function PATCH(
       }
     }
 
+    // Guard: reject if a subsequent round already exists
+    const { data: currentRound, error: roundErr } = await supabase
+      .from("tournament_rounds")
+      .select("round_number, tournament_id")
+      .eq("id", roundId)
+      .single();
+
+    if (roundErr || !currentRound) {
+      return NextResponse.json(
+        { error: "Ronde tidak ditemukan" },
+        { status: 404 },
+      );
+    }
+
+    const { data: nextRound } = await supabase
+      .from("tournament_rounds")
+      .select("id")
+      .eq("tournament_id", currentRound.tournament_id)
+      .gt("round_number", currentRound.round_number)
+      .limit(1)
+      .single();
+
+    if (nextRound) {
+      return NextResponse.json(
+        { error: "Ronde berikutnya sudah digenerate, hasil tidak bisa diubah" },
+        { status: 409 },
+      );
+    }
+
     for (const r of results) {
       const update: Record<string, unknown> = {
         player1_score: r.player1_score,
