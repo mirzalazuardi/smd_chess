@@ -107,13 +107,13 @@ export default function SyncPage() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            ID Turnamen SMD
+            Kode/ID Turnamen SMD
           </label>
           <input
             type="text"
             value={tournamentId}
             onChange={(e) => setTournamentId(e.target.value)}
-            placeholder="UUID turnamen target"
+            placeholder="kode turnamen (mis. smd_pelajar_sd_2026) atau UUID"
             className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm font-mono"
           />
         </div>

@@ -42,11 +42,12 @@ export async function POST(request: Request) {
 
   const supabase = await createServiceClient();
 
-  const { data: tournament, error: tournamentError } = await supabase
-    .from("tournaments")
-    .select("id, status")
-    .eq("id", tournamentId)
-    .single();
+  // Try UUID first, then tournament code
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(tournamentId);
+  let query = supabase.from("tournaments").select("id, status");
+  query = isUuid ? query.eq("id", tournamentId) : query.eq("code", tournamentId);
+
+  const { data: tournament, error: tournamentError } = await query.single();
 
   if (tournamentError || !tournament) {
     return NextResponse.json(
@@ -75,7 +76,7 @@ export async function POST(request: Request) {
   const { data: existing } = await supabase
     .from("registrations")
     .select("full_name")
-    .eq("tournament_id", tournamentId);
+    .eq("tournament_id", tournament.id);
 
   const existingNames = extractExistingNames(existing ?? []);
   const mapped = mapPlayersToRegistrations(data.players);
@@ -112,7 +113,7 @@ export async function POST(request: Request) {
       .from("registrations")
       .insert({
         registration_id: registrationId,
-        tournament_id: tournamentId,
+        tournament_id: tournament.id,
         full_name: player.full_name,
         student_status: player.student_status,
         school_name: player.school_name,
@@ -161,7 +162,7 @@ export async function POST(request: Request) {
     const { data: round, error: roundError } = await supabase
       .from("tournament_rounds")
       .insert({
-        tournament_id: tournamentId,
+        tournament_id: tournament.id,
         round_number: roundNum,
         status: "ongoing",
       })
