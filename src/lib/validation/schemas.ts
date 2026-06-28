@@ -78,3 +78,45 @@ export const importRowSchema = z
   );
 
 export type ImportRowInput = z.infer<typeof importRowSchema>;
+
+// ─── Chess-Results.com Import Schemas ───────────────────────────────
+
+export const chessResultsPlayerSchema = z.object({
+  startNo: z.number().int().positive(),
+  name: z.string().min(1),
+  federation: z.string().optional(),
+  rating: z.number().int().min(0).optional(),
+  club: z.string().optional(),
+});
+
+export const chessResultsPairingSchema = z.object({
+  table: z.number().int().positive(),
+  whiteName: z.string().min(1),
+  blackName: z.string(),
+  result: z.string().optional(),
+});
+
+export const chessResultsMetaSchema = z.object({
+  name: z.string().min(1),
+  federation: z.string().optional(),
+  startDate: z.string().optional(),
+  endDate: z.string().optional(),
+  rounds: z.number().int().min(1),
+  arbiter: z.string().optional(),
+  city: z.string().optional(),
+});
+
+export const chessResultsUrlSchema = z.string().url().regex(
+  /^https?:\/\/chess-results\.com\/tnr\d+/i,
+  "URL harus dari chess-results.com (format: chess-results.com/tnr...)",
+);
+
+export const importChessResultsSchema = z.object({
+  url: chessResultsUrlSchema,
+  tournamentId: z.string().uuid("ID turnamen tidak valid"),
+});
+
+export type ChessResultsPlayerInput = z.infer<typeof chessResultsPlayerSchema>;
+export type ChessResultsPairingInput = z.infer<typeof chessResultsPairingSchema>;
+export type ChessResultsMetaInput = z.infer<typeof chessResultsMetaSchema>;
+export type ImportChessResultsInput = z.infer<typeof importChessResultsSchema>;
