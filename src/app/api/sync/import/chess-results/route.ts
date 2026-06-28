@@ -76,7 +76,7 @@ export async function POST(request: Request) {
   const { data: existing } = await supabase
     .from("registrations")
     .select("full_name")
-    .eq("tournament_id", tournamentId);
+    .eq("tournament_id", tournament.id);
 
   const existingNames = extractExistingNames(existing ?? []);
   const mapped = mapPlayersToRegistrations(data.players);
@@ -113,7 +113,7 @@ export async function POST(request: Request) {
       .from("registrations")
       .insert({
         registration_id: registrationId,
-        tournament_id: tournamentId,
+        tournament_id: tournament.id,
         full_name: player.full_name,
         student_status: player.student_status,
         school_name: player.school_name,
@@ -162,7 +162,7 @@ export async function POST(request: Request) {
     const { data: round, error: roundError } = await supabase
       .from("tournament_rounds")
       .insert({
-        tournament_id: tournamentId,
+        tournament_id: tournament.id,
         round_number: roundNum,
         status: "ongoing",
       })

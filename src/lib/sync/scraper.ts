@@ -72,7 +72,11 @@ export async function fetchTournamentPage(
   art: number,
   extraParams?: string,
 ): Promise<string> {
-  const params = [`lan=18`, `art=${art}`];
+  // lan=1 → English. chess-results renders stable English column headers
+  // ("Name", "FED", "Rtg", "White", "Black", "Result", "N.Rd") that the
+  // parsers below rely on. Other languages (e.g. lan=18 = Finnish) change
+  // every label and break parsing.
+  const params = [`lan=1`, `art=${art}`];
   if (extraParams) params.push(extraParams);
 
   const url = `${BASE_URL}/tnr${tnrId}.aspx?${params.join("&")}`;
@@ -165,49 +169,65 @@ function extractTableRows(
   return rows;
 }
 
+/**
+ * Find the index of the first header cell matching the given pattern.
+ * Returns -1 if no column matches.
+ */
+function findColumn(header: string[], pattern: RegExp): number {
+  return header.findIndex((cell) => pattern.test(cell));
+}
+
+/** chess-results renders player names with a trailing comma ("ALIF,"). */
+function cleanName(name: string): string {
+  return name.replace(/,\s*$/, "").trim();
+}
+
+/** Section headings that are NOT the tournament title. */
+const SECTION_HEADINGS =
+  /^(starting rank|alphabetical|ranking|cross\s*table|pairings|results?|standings|player|round)/i;
+
 // ─── Parse Overview ────────────────────────────────────────────────────
 
 export function parseOverview(html: string): TournamentMeta {
-  const text = cleanText(stripTags(html));
+  // The tournament name is rendered as an <h2> heading. The page also has
+  // section headings ("Starting rank", "Cross table", …) — skip those and
+  // take the first heading that looks like an actual tournament title.
+  const headings = [...html.matchAll(/<h[12][^>]*>([\s\S]*?)<\/h[12]>/gi)]
+    .map((m) => cleanText(stripTags(m[1])))
+    .filter((h) => h.length > 0);
 
-  // Name comes after "Tournament selection:" and before the next key field
-  const nameMatch = text.match(
-    /Tournament selection:\s*(.+?)\s*(?:Rounds|Ronden|Date|Tanggal|Federation|City|Kota|Arbiter|Wasit)\s*:?\s*\d/i,
-  );
-  let name = nameMatch?.[1]?.trim() ?? "";
+  let name =
+    headings.find((h) => !SECTION_HEADINGS.test(h)) ?? headings[0] ?? "";
 
-  // Fallback: simpler match when boundary keywords aren't present
+  // Fallback: the <title> ends with " - <tournament name>".
   if (!name) {
-    const simpleMatch = text.match(/Tournament selection:\s*(.+?)(?:\n|$)/i);
-    name = simpleMatch?.[1]?.trim() ?? "Unknown Tournament";
+    const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+    const title = titleMatch ? cleanText(stripTags(titleMatch[1])) : "";
+    name = title.split(/\s+-\s+/).pop()?.trim() ?? "Unknown Tournament";
   }
 
-  const roundsMatch = text.match(/(?:Rounds|Ronden)\s*:?\s*(\d+)/i);
-  const rounds = roundsMatch ? parseInt(roundsMatch[1], 10) : 0;
+  if (!name) name = "Unknown Tournament";
 
-  const fedMatch = text.match(/Federation\s*:?\s*([A-Z]{3})/i);
-  const federation = fedMatch?.[1];
+  const text = cleanText(stripTags(html));
+
+  // Round count: the cross-table view exposes "1.Rd 2.Rd …" columns.
+  // Take the highest round number seen (0 if this page has none).
+  const roundNumbers = [...text.matchAll(/(\d+)\s*\.\s*Rd/gi)].map((m) =>
+    parseInt(m[1], 10),
+  );
+  const rounds = roundNumbers.length > 0 ? Math.max(...roundNumbers) : 0;
 
   const dateMatch = text.match(
-    /(?:Date|Tanggal)\s*:?\s*(\d{4}\/\d{2}\/\d{2})\s*(?:to|s\.?d\.?|-\s*)\s*(\d{4}\/\d{2}\/\d{2})/i,
+    /(\d{4}\/\d{2}\/\d{2})\s*(?:to|s\.?d\.?|-)\s*(\d{4}\/\d{2}\/\d{2})/i,
   );
   const startDate = dateMatch?.[1];
   const endDate = dateMatch?.[2];
 
-  const arbiterMatch = text.match(/(?:Arbiter|Wasit)\s*:?\s*(.+?)(?:\n|$)/i);
-  const arbiter = arbiterMatch?.[1]?.trim();
-
-  const cityMatch = text.match(/(?:City|Kota|Ort)\s*:?\s*(.+?)(?:\n|$)/i);
-  const city = cityMatch?.[1]?.trim();
-
   return {
     name,
-    federation,
     startDate,
     endDate,
     rounds,
-    arbiter,
-    city,
   };
 }
 
@@ -222,34 +242,47 @@ export function parsePlayerList(html: string): ChessResultsPlayer[] {
     );
   }
 
-  // Find header row to determine column mapping
-  const headerIdx = rows.findIndex((row) =>
-    row.some(
-      (cell) =>
-        /no/i.test(cell) ||
-        /name|nama/i.test(cell) ||
-        /fed/i.test(cell) ||
-        /rtg|rating/i.test(cell),
-    ),
+  // The header row is the first row with a "Name" column alongside a
+  // rating/federation column — distinguishes it from search boxes or
+  // navigation rows that also contain the word "name".
+  const headerIdx = rows.findIndex(
+    (row) =>
+      findColumn(row, /name|nama|nimi/i) >= 0 &&
+      (findColumn(row, /^fed$/i) >= 0 ||
+        findColumn(row, /^(rtg|rating|elo)$/i) >= 0),
   );
+  if (headerIdx < 0) {
+    throw new ChessResultsError(
+      "Gagal membaca data pemain — header tabel tidak ditemukan",
+      "PARSE",
+    );
+  }
 
-  const dataRows = headerIdx >= 0 ? rows.slice(headerIdx + 1) : rows;
+  const header = rows[headerIdx];
+  // Real chess-results layout: Rk. | SNo | (flag) | Name | FED | Rtg | Club/City
+  const nameCol = findColumn(header, /name|nama|nimi/i);
+  const noCol = findColumn(header, /^(sno|nr\.?|no\.?)$/i);
+  const startCol = noCol >= 0 ? noCol : findColumn(header, /^rk\.?$/i);
+  const fedCol = findColumn(header, /^fed$/i);
+  const rtgCol = findColumn(header, /^(rtg|rating|elo)$/i);
+  const clubCol = findColumn(header, /club|city|kerho|kaupunki|verein/i);
 
+  const dataRows = rows.slice(headerIdx + 1);
   const players: ChessResultsPlayer[] = [];
 
   for (const row of dataRows) {
-    if (row.length < 2) continue;
+    if (row.length <= nameCol) continue;
 
-    const startNo = parseInt(row[0], 10);
+    const startNo = parseInt(row[startCol] ?? "", 10);
     if (isNaN(startNo)) continue;
 
-    const name = row[1];
+    const name = cleanName(row[nameCol] ?? "");
     if (!name) continue;
 
-    const federation = row[2] || undefined;
-    const ratingRaw = parseInt(row[3], 10);
-    const rating = isNaN(ratingRaw) ? undefined : ratingRaw;
-    const club = row[4] || undefined;
+    const federation = fedCol >= 0 ? row[fedCol] || undefined : undefined;
+    const ratingRaw = rtgCol >= 0 ? parseInt(row[rtgCol] ?? "", 10) : NaN;
+    const rating = isNaN(ratingRaw) || ratingRaw === 0 ? undefined : ratingRaw;
+    const club = clubCol >= 0 ? row[clubCol] || undefined : undefined;
 
     players.push({ startNo, name, federation, rating, club });
   }
@@ -268,38 +301,47 @@ export function parsePlayerList(html: string): ChessResultsPlayer[] {
 
 export function parsePairings(
   html: string,
-  roundNumber: number,
+  _roundNumber?: number,
 ): ChessResultsPairing[] {
   const rows = extractTableRows(html);
   if (rows.length === 0) {
     return []; // No pairings yet for this round — not an error
   }
 
-  const headerIdx = rows.findIndex((row) =>
-    row.some(
-      (cell) =>
-        /bo\.|board|papan|meja/i.test(cell) ||
-        /white|putih/i.test(cell) ||
-        /black|hitam/i.test(cell),
-    ),
+  // The header row is the first row containing both "White" and "Black".
+  const headerIdx = rows.findIndex(
+    (row) =>
+      findColumn(row, /white|putih|valkea/i) >= 0 &&
+      findColumn(row, /black|hitam|musta/i) >= 0,
   );
+
+  const header = headerIdx >= 0 ? rows[headerIdx] : [];
+  // Real layout: Bo. | No. | (flag) | White | Rtg | Pts. | Result | Pts. | (flag) | Black | Rtg | No.
+  const boardCol =
+    headerIdx >= 0 ? findColumn(header, /^(bo\.?|board|papan|meja)$/i) : 0;
+  const whiteCol = headerIdx >= 0 ? findColumn(header, /white|putih|valkea/i) : 1;
+  const blackCol = headerIdx >= 0 ? findColumn(header, /black|hitam|musta/i) : 2;
+  const resultCol =
+    headerIdx >= 0 ? findColumn(header, /result|hasil|tulos/i) : 3;
 
   const dataRows = headerIdx >= 0 ? rows.slice(headerIdx + 1) : rows;
 
   const pairings: ChessResultsPairing[] = [];
 
   for (const row of dataRows) {
-    if (row.length < 3) continue;
+    const maxCol = Math.max(boardCol, whiteCol, blackCol);
+    if (row.length <= maxCol) continue;
 
-    const table = parseInt(row[0], 10);
+    const table = parseInt(row[boardCol] ?? "", 10);
     if (isNaN(table)) continue;
 
-    const whiteName = row[1];
-    const blackName = row[2];
+    const whiteName = cleanName(row[whiteCol] ?? "");
+    const blackName = cleanName(row[blackCol] ?? "");
 
     // Detect BYE
-    const isBye = /bye|spielfrei|lewat/i.test(blackName);
-    const result = row[3] || undefined;
+    const isBye = /bye|spielfrei|lewat/i.test(blackName) || blackName === "";
+    const result =
+      resultCol >= 0 ? row[resultCol]?.trim() || undefined : undefined;
 
     pairings.push({
       table,
@@ -323,9 +365,20 @@ export function parseCrossTable(html: string): ChessResultsResult[] {
     );
   }
 
-  // Cross table header typically has round numbers
-  const headerIdx = rows.findIndex((row) =>
-    row.some((cell) => /rd\.?\s*\d|ronde/i.test(cell)),
+  // Cross table header has round columns rendered as "1.Rd", "2.Rd", …
+  // (also tolerate "Rd.1" / "Ronde 1" from other layouts).
+  const matchRoundCol = (cell: string): number | null => {
+    const m =
+      cell.match(/^(\d+)\s*\.?\s*Rd\b/i) ||
+      cell.match(/^Rd\.?\s*(\d+)$/i) ||
+      cell.match(/^ronde\s*(\d+)$/i);
+    return m ? parseInt(m[1], 10) : null;
+  };
+
+  const headerIdx = rows.findIndex(
+    (row) =>
+      findColumn(row, /name|nama|nimi/i) >= 0 &&
+      row.some((cell) => matchRoundCol(cell) !== null),
   );
 
   if (headerIdx < 0) {
@@ -336,14 +389,14 @@ export function parseCrossTable(html: string): ChessResultsResult[] {
   }
 
   const headerRow = rows[headerIdx];
-  // Find round columns — matches "1", "2", "Rd.1", "Rd 2", "Ronde 1"
+  const nameCol = findColumn(headerRow, /name|nama|nimi/i);
   const roundCols: number[] = [];
   const roundColNumber: number[] = [];
   for (let i = 0; i < headerRow.length; i++) {
-    const match = headerRow[i].match(/^(?:rd\.?\s*|ronde\s*)?(\d+)$/i);
-    if (match) {
+    const roundNum = matchRoundCol(headerRow[i]);
+    if (roundNum !== null) {
       roundCols.push(i);
-      roundColNumber.push(parseInt(match[1], 10));
+      roundColNumber.push(roundNum);
     }
   }
 
@@ -351,9 +404,9 @@ export function parseCrossTable(html: string): ChessResultsResult[] {
 
   for (let r = headerIdx + 1; r < rows.length; r++) {
     const row = rows[r];
-    if (row.length < 2) continue;
+    if (row.length <= nameCol) continue;
 
-    const playerName = row[1]; // Usually after rank column
+    const playerName = cleanName(row[nameCol]);
     if (!playerName) continue;
 
     const roundResults: ChessResultsRoundResult[] = [];
@@ -384,7 +437,23 @@ export function parseCrossTable(html: string): ChessResultsResult[] {
   return results;
 }
 
-/** Parse a single cross-table cell like "1w 5", "½b 3", "0", "+" */
+/** Map a raw cross-table result char to the canonical result type. */
+function normalizeCrossResult(
+  raw: string | undefined,
+): "1" | "0" | "½" | "" | "+" | "-" {
+  switch (raw) {
+    case "1":
+    case "0":
+    case "½":
+    case "+":
+    case "-":
+      return raw;
+    default:
+      return "";
+  }
+}
+
+/** Parse a single cross-table cell like "18w1", "3b0", "36b-", "4w" */
 function parseSingleCrossResult(cell: string): {
   result: "1" | "0" | "½" | "" | "+" | "-";
   opponentName?: string;
@@ -392,28 +461,27 @@ function parseSingleCrossResult(cell: string): {
 } {
   const clean = cell.trim();
 
-  // "1w 5" → white win vs player 5
-  const colorResultMatch = clean.match(/^([10½])\s*([wb])\s*(\d+)?/i);
-  if (colorResultMatch) {
-    const resultMap: Record<string, "1" | "0" | "½" | "+" | "-"> = {
-      "1": "1",
-      "0": "0",
-      "½": "½",
-    };
+  // chess-results cross-table cell: "{opponentSNo}{color}{result}".
+  //   "18w1" → vs #18, white, win
+  //   "3w0"  → vs #3, white, loss
+  //   "36b-" → vs #36, black, forfeit loss
+  //   "4w"   → vs #4, white, result pending (round in progress)
+  const match = clean.match(/^(\d+)\s*([wb])\s*([10½½+\-])?$/i);
+  if (match) {
     return {
-      result: resultMap[colorResultMatch[1]] ?? "",
-      color: colorResultMatch[2].toUpperCase() as "W" | "B",
-      opponentName: colorResultMatch[3],
+      result: normalizeCrossResult(match[3]),
+      color: match[2].toUpperCase() as "W" | "B",
+      opponentName: match[1],
     };
   }
 
-  // "+" or "-" (forfeit)
+  // "+" or "-" (bye / forfeit with no opponent)
   if (clean === "+") return { result: "+" };
   if (clean === "-") return { result: "-" };
 
   // Plain result like "1", "0", "½"
-  if (/^[10½]$/.test(clean)) {
-    return { result: clean as "1" | "0" | "½" };
+  if (/^[10½½]$/.test(clean)) {
+    return { result: normalizeCrossResult(clean) };
   }
 
   return { result: "" };
@@ -464,6 +532,17 @@ export interface FullImportData {
   crossTable: ChessResultsResult[];
 }
 
+/** Highest round number appearing in a parsed cross table (0 if none). */
+function maxRound(crossTable: ChessResultsResult[]): number {
+  let max = 0;
+  for (const player of crossTable) {
+    for (const r of player.roundResults) {
+      if (r.round > max) max = r.round;
+    }
+  }
+  return max;
+}
+
 /**
  * Fetch and parse all data for a tournament from chess-results.com.
  * Fetches overview (art=0), player list (art=1), cross table (art=4),
@@ -489,9 +568,14 @@ export async function fetchFullTournamentData(
     // Cross table may not be available
   }
 
+  // The overview page doesn't list the round count; derive it from the
+  // cross table (highest round played) when the overview didn't provide one.
+  const totalRounds = meta.rounds || maxRound(crossTable);
+  meta.rounds = totalRounds;
+
   // Fetch pairings for each round
   const pairings = new Map<number, ChessResultsPairing[]>();
-  for (let rd = 1; rd <= meta.rounds; rd++) {
+  for (let rd = 1; rd <= totalRounds; rd++) {
     // Small delay between requests (rate limiting)
     if (rd > 1) {
       await new Promise((resolve) => setTimeout(resolve, 1500));

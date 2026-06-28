@@ -113,7 +113,7 @@ export default function SyncPage() {
             type="text"
             value={tournamentId}
             onChange={(e) => setTournamentId(e.target.value)}
-            placeholder="UUID turnamen target"
+            placeholder="kode turnamen (mis. smd_pelajar_sd_2026) atau UUID"
             className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm font-mono"
           />
         </div>
