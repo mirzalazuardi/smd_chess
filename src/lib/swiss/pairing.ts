@@ -85,26 +85,39 @@ function pairGroup(players: Player[]): Pairing[] {
 
   const pairings: Pairing[] = [];
   const available = [...players];
-  const used = new Set<string>();
 
   while (available.length >= 2) {
     const p1 = available.shift()!;
 
-    // Find first available opponent p1 hasn't faced
-    let opponentIndex = available.findIndex(
-      (p) => !p1.opponentIds.includes(p.id) && !used.has(p.id),
-    );
+    // Score each remaining candidate as p1's opponent
+    let bestIndex = 0;
+    let bestScore = -Infinity;
 
-    if (opponentIndex === -1) {
-      // All remaining opponents already faced — pair anyway (last resort)
-      opponentIndex = 0;
+    for (let i = 0; i < available.length; i++) {
+      const p2 = available[i];
+      let score = 0;
+
+      // Heavy penalty for rematch (want to avoid at all costs)
+      if (!p1.opponentIds.includes(p2.id)) {
+        score += 1000;
+      }
+
+      // Bonus for color alternation: p1 as white, p2 as black
+      if (p1.lastColor !== "W" && p2.lastColor !== "B") score += 10;
+      // Bonus for color alternation: p2 as white, p1 as black
+      if (p2.lastColor !== "W" && p1.lastColor !== "B") score += 10;
+
+      // Tiebreaker: prefer closer ratings for fairer pairings
+      score -= Math.abs(p1.chess_rating - p2.chess_rating) / 1000;
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestIndex = i;
+      }
     }
 
-    const p2 = available.splice(opponentIndex, 1)[0];
-    used.add(p1.id);
-    used.add(p2.id);
+    const p2 = available.splice(bestIndex, 1)[0];
 
-    // Assign colors
     const [white, black] = assignColors(p1, p2);
 
     white.lastColor = "W";
