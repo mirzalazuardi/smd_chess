@@ -88,6 +88,12 @@ export default async function AdminLayout({
               >
                 Ronde
               </Link>
+              <Link
+                href="/admin/sync"
+                className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                Sync
+              </Link>
             </nav>
           </div>
           <div className="flex items-center gap-3">
