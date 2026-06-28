@@ -15,11 +15,14 @@ interface Match {
 interface Props {
   roundId: string;
   matches: (Match & { white_name?: string; black_name?: string })[];
+  initialResults?: Record<string, { p1: number; p2: number | null }>;
 }
 
-export function ResultInputForm({ roundId, matches }: Props) {
+export function ResultInputForm({ roundId, matches, initialResults }: Props) {
   const router = useRouter();
-  const [results, setResults] = useState<Record<string, { p1: number; p2: number | null }>>({});
+  const [results, setResults] = useState<
+    Record<string, { p1: number; p2: number | null }>
+  >(initialResults ?? {});
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

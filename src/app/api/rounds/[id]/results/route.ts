@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/db/server";
 import { requireAdmin } from "@/lib/auth/guard";
+import { hasSubsequentRound } from "@/lib/swiss/round";
 
 export async function PATCH(
   request: Request,
@@ -33,6 +34,35 @@ export async function PATCH(
           { status: 400 },
         );
       }
+    }
+
+    // Guard: reject if a subsequent round already exists
+    const { data: currentRound, error: roundErr } = await supabase
+      .from("tournament_rounds")
+      .select("round_number, tournament_id")
+      .eq("id", roundId)
+      .single();
+
+    if (roundErr || !currentRound) {
+      return NextResponse.json(
+        { error: "Ronde tidak ditemukan" },
+        { status: 404 },
+      );
+    }
+
+    const { data: allRounds } = await supabase
+      .from("tournament_rounds")
+      .select("round_number")
+      .eq("tournament_id", currentRound.tournament_id);
+
+    if (
+      allRounds &&
+      hasSubsequentRound(allRounds, currentRound.round_number)
+    ) {
+      return NextResponse.json(
+        { error: "Ronde berikutnya sudah digenerate, hasil tidak bisa diubah" },
+        { status: 409 },
+      );
     }
 
     for (const r of results) {
