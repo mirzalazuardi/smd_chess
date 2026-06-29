@@ -1,15 +1,27 @@
 # SMD Chess
 
-Sistem manajemen turnamen catur untuk Percasi Sumedang — registrasi online, verifikasi pembayaran, dan Swiss pairing.
+Sistem manajemen turnamen catur untuk Percasi Sumedang — registrasi online, verifikasi pembayaran, Swiss pairing, sinkronisasi chess-results.com, dan tampilan TV pairing.
 
-## Setup
+## Fitur
 
-### Prerequisites
+- **Registrasi online** — formulir pendaftaran dengan unggahan bukti transfer
+- **Verifikasi pembayaran** — admin verifikasi dan toggle status lunas
+- **Swiss pairing** — generate pairing otomatis berdasarkan skor dan warna
+- **Import CSV** — impor peserta via CSV dengan validasi
+- **Sinkronisasi chess-results.com** — import data peserta dan pairing dari chess-results.com
+- **Export TRF/CSV** — export data turnamen ke format TRF (FIDE) dan CSV
+- **TV display** — tampilan pairing layar penuh dengan toggle tema dan auto-refresh
+- **PWA** — dapat diinstal di mobile, offline support
+- **Edit pairing manual** — admin dapat menyesuaikan pairing sebelum input hasil
+- **Edit hasil ronde** — admin dapat mengoreksi skor setelah input
+
+## Prasyarat
+
 - Node.js 18+
 - Supabase account (free tier)
 - Vercel account (free tier)
 
-### Installation
+## Instalasi
 
 ```bash
 git clone <repo-url>
@@ -19,23 +31,34 @@ npm install
 
 ### Environment Variables
 
-Copy `.env.example` to `.env.local`:
+Salin `.env.example` ke `.env.local`:
 
 ```bash
 cp .env.example .env.local
 ```
 
-Required variables:
-```
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+Variabel yang diperlukan:
+
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+
+# App
 NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# PWA (opsional — set "true" untuk test service worker saat dev)
+# ENABLE_PWA=true
+
+# Swiss Pairing (opsional)
+SWISS_MAX_FLOAT_DOWN=2
 ```
 
 ### Database Setup
 
-Run Supabase migrations:
+Jalankan migrasi Supabase:
+
 ```bash
 npx supabase db push
 ```
@@ -46,99 +69,135 @@ npx supabase db push
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Buka [http://localhost:3000](http://localhost:3000).
 
 ## Testing
 
 ```bash
+# Unit & integration tests (Vitest)
 npm test
+
+# Watch mode
+npm run test:watch
+
+# E2E tests (Playwright)
+npm run test:e2e
 ```
 
 ## Deployment
 
 ### Vercel
 
-1. Connect repo to Vercel
-2. Set environment variables in Vercel dashboard
+1. Hubungkan repo ke Vercel
+2. Set environment variables di Vercel dashboard
 3. Deploy
 
 ### Supabase
 
-1. Create production project
-2. Run migrations against production
-3. Update Vercel env vars with production keys
+1. Buat project production
+2. Jalankan migrasi terhadap production
+3. Update Vercel env vars dengan production keys
 
 ## Routes
 
 ### Public
 
-| Route | Description |
+| Route | Deskripsi |
 |---|---|
 | `/` | Home page |
-| `/daftar` | Registration form with tournament dropdown |
-| `/daftar/[code]` | Direct registration for a specific tournament |
-| `/daftar/sukses` | Registration success page |
-| `/jadwal` | Tournament list — pick one to view schedule |
-| `/jadwal/[code]` | Round-by-round pairings for a tournament |
-| `/klasemen` | Tournament list — pick one to view standings |
-| `/klasemen/[code]` | Standings with Buchholz tie-breaker |
-| `/pairing/[code]/[round]` | TV display — full-screen pairings with theme toggle and auto-refresh |
+| `/daftar` | Formulir pendaftaran dengan dropdown turnamen |
+| `/daftar/[code]` | Pendaftaran langsung untuk turnamen tertentu |
+| `/daftar/sukses` | Halaman sukses pendaftaran |
+| `/jadwal` | Daftar turnamen — pilih satu untuk lihat jadwal |
+| `/jadwal/[code]` | Pairing per ronde untuk suatu turnamen |
+| `/klasemen` | Daftar turnamen — pilih satu untuk lihat klasemen |
+| `/klasemen/[code]` | Klasemen dengan tie-breaker Buchholz |
+| `/pairing/[code]/[round]` | Tampilan TV — pairing layar penuh dengan toggle tema & auto-refresh |
 
 ### Admin
 
-| Route | Description |
+| Route | Deskripsi |
 |---|---|
-| `/admin/login` | Admin login (Supabase Auth) |
-| `/admin` | Dashboard with quick links |
-| `/admin/turnamen` | Tournament list |
-| `/admin/turnamen/baru` | Create tournament |
-| `/admin/turnamen/[id]/edit` | Edit tournament |
+| `/admin/login` | Login admin (Supabase Auth) |
+| `/admin` | Dashboard dengan quick links |
+| `/admin/turnamen` | Daftar turnamen |
+| `/admin/turnamen/baru` | Buat turnamen baru |
+| `/admin/turnamen/[id]/edit` | Edit turnamen |
 | `/admin/turnamen/[id]/import` | Import peserta via CSV |
-| `/admin/ronde` | Round list — pick tournament |
-| `/admin/ronde/[tournament_id]` | Manage round: generate pairings, input results |
-| `/admin/pembayaran` | Payment verification — pick tournament |
-| `/admin/pembayaran/[tournament_id]` | Verify payments, toggle paid status, view proof |
+| `/admin/ronde` | Daftar ronde — pilih turnamen |
+| `/admin/ronde/[tournament_id]` | Kelola ronde: generate pairing, input hasil, edit pairing |
+| `/admin/pembayaran` | Verifikasi pembayaran — pilih turnamen |
+| `/admin/pembayaran/[tournament_id]` | Verifikasi pembayaran, toggle status lunas, lihat bukti |
+| `/admin/sync` | Sinkronisasi data dari chess-results.com |
 
 ### API
 
-| Method | Route | Description |
+| Method | Route | Deskripsi |
 |---|---|---|
-| `POST` | `/api/registrations` | Submit registration |
-| `POST` | `/api/registrations/[id]/verify` | Toggle payment status (admin) |
-| `GET` | `/api/tournaments` | List all tournaments |
-| `POST` | `/api/tournaments` | Create tournament (admin) |
-| `GET` | `/api/tournaments/[id]` | Get tournament details |
-| `PUT` | `/api/tournaments/[id]` | Update tournament (admin) |
-| `DELETE` | `/api/tournaments/[id]` | Delete tournament (admin) |
+| `POST` | `/api/registrations` | Submit pendaftaran |
+| `POST` | `/api/registrations/[id]/verify` | Toggle status pembayaran (admin) |
+| `GET` | `/api/tournaments` | List semua turnamen |
+| `POST` | `/api/tournaments` | Buat turnamen (admin) |
+| `GET` | `/api/tournaments/[id]` | Detail turnamen |
+| `PUT` | `/api/tournaments/[id]` | Update turnamen (admin) |
+| `DELETE` | `/api/tournaments/[id]` | Hapus turnamen (admin) |
 | `POST` | `/api/tournaments/[id]/import` | Import peserta via CSV (admin) |
-| `GET` | `/api/tournaments/[id]/rounds` | List rounds for a tournament |
-| `POST` | `/api/tournaments/[id]/rounds` | Generate Swiss pairings for next round (admin) |
-| `POST` | `/api/rounds/[id]/results` | Save match results (admin) |
+| `GET` | `/api/tournaments/[id]/rounds` | List ronde untuk turnamen |
+| `POST` | `/api/tournaments/[id]/rounds` | Generate Swiss pairing untuk ronde berikutnya (admin) |
+| `POST` | `/api/rounds/[id]/results` | Simpan hasil pertandingan (admin) |
+| `PATCH` | `/api/rounds/[id]/pairings` | Edit pairing manual sebelum hasil (admin) |
+| `GET` | `/api/tournaments/[id]/export/trf` | Export file TRF (admin) |
+| `GET` | `/api/tournaments/[id]/export/csv` | Export CSV daftar peserta (admin) |
+| `POST` | `/api/sync/import/chess-results` | Import data dari chess-results.com (admin) |
+| `GET` | `/api/sync/preview/chess-results` | Preview data chess-results.com (admin) |
 
-## Project Structure
+## Struktur Project
 
 ```
 src/
 ├── app/
-│   ├── (public)/          # Public-facing pages
-│   │   ├── daftar/        # Registration flow
-│   │   ├── jadwal/        # Pairing schedule
-│   │   ├── klasemen/      # Standings
-│   │   └── pairing/       # TV display
-│   ├── admin/             # Admin dashboard
-│   └── api/               # API routes (REST)
+│   ├── (public)/              # Halaman publik
+│   │   ├── daftar/            # Alur pendaftaran
+│   │   ├── jadwal/            # Jadwal pairing
+│   │   ├── klasemen/          # Klasemen
+│   │   └── pairing/           # Tampilan TV
+│   ├── admin/                 # Dashboard admin (protected)
+│   │   ├── login/             # Login admin
+│   │   ├── turnamen/          # Manajemen turnamen
+│   │   ├── pembayaran/        # Verifikasi pembayaran
+│   │   ├── ronde/             # Manajemen ronde
+│   │   └── sync/              # Sinkronisasi chess-results
+│   ├── api/                   # API routes (REST)
+│   ├── offline/               # Halaman offline (PWA)
+│   ├── layout.tsx
+│   ├── page.tsx               # Home
+│   ├── error.tsx
+│   ├── loading.tsx
+│   └── not-found.tsx
 ├── components/
-│   ├── forms/             # Form components (registration)
-│   └── ui/                # Reusable UI components
-└── lib/
-    ├── auth/              # Auth guards
-    ├── db/                # Supabase clients
-    ├── swiss/             # Swiss pairing engine
-    ├── utils/             # Helpers
-    └── validation/        # Zod schemas
+│   ├── forms/                 # Form components
+│   └── ui/                    # Reusable UI components
+├── lib/
+│   ├── auth/                  # Auth guards
+│   ├── db/                    # Supabase clients & types
+│   ├── swiss/                 # Swiss pairing engine
+│   ├── sync/                  # chess-results sync (scraper, mapper, export)
+│   ├── import/                # CSV import parsing
+│   ├── validation/            # Zod schemas
+│   └── utils/                 # Helpers
+└── middleware.ts              # Next.js middleware (auth redirects)
 ```
 
-See `openspec/project.md` for detailed database schema and specification.
+## Panduan
+
+- [Panduan Admin](docs/panduan-admin.md) — cara mengelola turnamen, ronde, dan pembayaran
+- [Panduan Peserta](docs/panduan-peserta.md) — cara mendaftar dan melihat jadwal/klasemen
+- [Panduan Wasit Swiss](docs/panduan-wasit-swiss.md) — alur pairing dan input hasil
+- [Sinkronisasi chess-results.com](docs/sync-chess-results.md) — import data dari chess-results.com
+
+## Spesifikasi Teknis
+
+Lihat `openspec/project.md` untuk skema database lengkap, testing strategy, dan constraint teknis.
 
 ## License
 
